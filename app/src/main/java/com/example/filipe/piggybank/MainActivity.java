@@ -376,10 +376,10 @@ public class MainActivity extends AppCompatActivity implements TextWatcher {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this,StatsActivity.class);
-                setListWithAbsoluteFrequencyOfCoins(getListWithEditTexts());
+                ArrayList<Integer> l_absoluteValues = setListWithAbsoluteFrequencyOfCoins(getListWithEditTexts());
                 System.out.println("LIST WITH ABSOLUTE FREQUENCY VALUES:");
                 System.out.println(getListWithAbsoluteFrequencyOfCoins());
-                intent.putIntegerArrayListExtra("numberOfCoins",getListWithAbsoluteFrequencyOfCoins());
+                intent.putIntegerArrayListExtra("numberOfCoins",l_absoluteValues);
                 startActivity(intent);
             }
         });
@@ -566,13 +566,15 @@ public class MainActivity extends AppCompatActivity implements TextWatcher {
         Toast.makeText(this,"afterTextChanged",Toast.LENGTH_LONG);
 
     }
-    private void setListWithAbsoluteFrequencyOfCoins(List<EditText> list)
+    private ArrayList<Integer> setListWithAbsoluteFrequencyOfCoins(List<EditText> list)
     {
+        ArrayList<Integer> l_absoluteFr = new ArrayList<>();
         for(EditText e: list)
         {
             int totalCoin = Integer.parseInt(e.getText().toString());
             l_absoluteFr.add(totalCoin);
         }
+        return l_absoluteFr;
     }
 
     private ArrayList<Integer> getListWithAbsoluteFrequencyOfCoins()

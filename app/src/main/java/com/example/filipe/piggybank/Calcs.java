@@ -168,6 +168,7 @@ public class Calcs {
     public ArrayList<Double> getListWithRelativeFrequencyOfCoins(List<Integer> l_absoluteValues)
     {
         ArrayList<Double> l_relativeFrOfCoins = new ArrayList<>();
+
         int totalCoinsInPiggyBank = getTotalNumberOfCoinsInPiggyBank(l_absoluteValues);
        for(Integer absoluteFrOfCoin : l_absoluteValues) {
            double relativeFrOfCoin;
@@ -182,6 +183,7 @@ public class Calcs {
                l_relativeFrOfCoins.add(relativeFrOfCoin);
            }
         }
+
         return l_relativeFrOfCoins;
     }
 
