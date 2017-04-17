@@ -23,7 +23,7 @@ public class Calcs {
     }
 
     //refactor this method
-    public double getTotalSumOfCoins(ArrayList<EditText> list, List<Double> l_values)
+    public double getTotalSumOfCoins(List<EditText> list, List<Double> l_values)
     {
         double totalSumOfCoins = 0;
         int size = list.size();

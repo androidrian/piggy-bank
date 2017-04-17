@@ -17,6 +17,7 @@ import android.widget.Toast;
 import java.io.File;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements TextWatcher {
@@ -70,7 +71,7 @@ public class MainActivity extends AppCompatActivity implements TextWatcher {
         setButtonListeners();
 
         setListOfValueOfCoins();
-        ArrayList<EditText> listWithEditText = getListWithEditTexts();
+        List<EditText> listWithEditText = getListWithEditTexts();
         //setListOfDecrementButtons();
 
         //Services reader = new Services();
@@ -131,71 +132,28 @@ public class MainActivity extends AppCompatActivity implements TextWatcher {
 
     private void setListOfValueOfCoins()
     {
-        l_values.add(VALUE_COIN_1);
-        l_values.add(VALUE_COIN_2);
-        l_values.add(VALUE_COIN_3);
-        l_values.add(VALUE_COIN_4);
-        l_values.add(VALUE_COIN_5);
-        l_values.add(VALUE_COIN_6);
-        l_values.add(VALUE_COIN_7);
-        l_values.add(VALUE_COIN_8);
+        l_values = Arrays.asList(VALUE_COIN_1,VALUE_COIN_2,VALUE_COIN_3,VALUE_COIN_4,VALUE_COIN_5,VALUE_COIN_6,VALUE_COIN_7,VALUE_COIN_8);
+
     }
 
 
-    private ArrayList<EditText> getListWithEditTexts()
+    private List<EditText> getListWithEditTexts()
     {
-
-        ArrayList<EditText> listWithEditText = new ArrayList<EditText>();
-
-        listWithEditText.add(numberCoins1);
-        listWithEditText.add(numberCoins2);
-        listWithEditText.add(numberCoins3);
-        listWithEditText.add(numberCoins4);
-        listWithEditText.add(numberCoins5);
-        listWithEditText.add(numberCoins6);
-        listWithEditText.add(numberCoins7);
-        listWithEditText.add(numberCoins8);
-
-        return listWithEditText;
+        List<EditText> list =
+                Arrays.asList(numberCoins1,numberCoins2,numberCoins3,numberCoins4,
+                        numberCoins5,numberCoins6,numberCoins7,numberCoins8);
+        return list;
     }
 
     private List<Button> setListOfIncrementButtons()
     {
-        List<Button> l_incButtons = new ArrayList<>();
-
-        l_incButtons.add(incButtonCoin1);
-        l_incButtons.add(incButtonCoin2);
-        l_incButtons.add(incButtonCoin3);
-        l_incButtons.add(incButtonCoin4);
-        l_incButtons.add(incButtonCoin5);
-        l_incButtons.add(incButtonCoin6);
-        l_incButtons.add(incButtonCoin7);
-        l_incButtons.add(incButtonCoin8);
-
+        List<Button> l_incButtons =
+                Arrays.asList(incButtonCoin1,incButtonCoin2,incButtonCoin3,incButtonCoin4,
+                        incButtonCoin4,incButtonCoin5,incButtonCoin6,incButtonCoin7,incButtonCoin8);
         return l_incButtons;
-
     }
 
     //back to this later, just to generalize a method to set the listeners
-    private void setListeners(View v) {
-
-        List<EditText> list = new ArrayList<>();
-        List<Button> l_incButtons = setListOfIncrementButtons();
-
-        for(Button button : l_incButtons)
-        {
-
-            button.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-
-
-                    double totalValueUpdate = Double.valueOf(df.format(updateTotalValue(v, numberCoins1, index)));
-                    totalValue.setText(String.valueOf(totalValueUpdate));
-                }
-            });
-        }
-    }
 
     private void setButtonListeners()
     {
@@ -432,14 +390,12 @@ public class MainActivity extends AppCompatActivity implements TextWatcher {
 
     private void setComponents()
     {
-        numberCoins1.setText(DEFAULT_VALUE);
-        numberCoins2.setText(DEFAULT_VALUE);
-        numberCoins3.setText(DEFAULT_VALUE);
-        numberCoins4.setText(DEFAULT_VALUE);
-        numberCoins5.setText(DEFAULT_VALUE);
-        numberCoins6.setText(DEFAULT_VALUE);
-        numberCoins7.setText(DEFAULT_VALUE);
-        numberCoins8.setText(DEFAULT_VALUE);
+        EditText editText;
+        for(int i = 0; i< getListWithEditTexts().size(); i++)
+        {
+            editText = getListWithEditTexts().get(i);
+            editText.setText(DEFAULT_VALUE);
+        }
 
 
     }
