@@ -78,6 +78,8 @@ public class StatsActivity extends AppCompatActivity {
         Calcs calc = new Calcs();
 
         ArrayList<Double> l_relativeFr = calc.getListWithRelativeFrequencyOfCoins(l_coinsAbsoluteFrequency);
+        System.out.println("RELATIVE FREQUENCY LIST");
+        System.out.println(l_relativeFr);
         ArrayList<Double> l_percentage  = calc.setListWithPercentageOfCoins(l_relativeFr);
         System.out.println("PERCENTAGE LIST");
         System.out.println(l_percentage);
@@ -94,7 +96,7 @@ public class StatsActivity extends AppCompatActivity {
 
         } else {
             System.out.println("EMPTY LIST");
-            Toast.makeText(this,"LIST IS EMPTY!",Toast.LENGTH_LONG);
+            Toast.makeText(this,"LIST IS EMPTY!",Toast.LENGTH_LONG).show();
         }
     }
 }

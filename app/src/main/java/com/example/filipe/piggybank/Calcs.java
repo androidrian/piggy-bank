@@ -15,7 +15,7 @@ public class Calcs {
 
     private String DEFAULT_VALUE = "0";
 
-    DecimalFormat df = new DecimalFormat("#.00");
+    DecimalFormat df = new DecimalFormat("#.000");
 
     public Calcs()
     {
@@ -173,7 +173,8 @@ public class Calcs {
            double relativeFrOfCoin;
            if (totalCoinsInPiggyBank != 0)//can't divide by 0
            {
-               relativeFrOfCoin = Double.valueOf(df.format( absoluteFrOfCoin/totalCoinsInPiggyBank) );
+               double value = (double)absoluteFrOfCoin/totalCoinsInPiggyBank;
+               relativeFrOfCoin = Double.valueOf(df.format(value));
                l_relativeFrOfCoins.add(relativeFrOfCoin);
            }else
            {
