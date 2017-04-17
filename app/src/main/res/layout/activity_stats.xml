@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.filipe.piggybank.StatsActivity">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentTop="true"
+            android:orientation="vertical"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:id="@+id/linearLayout3">
+
+            <TextView
+                android:id="@+id/statsTextView1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="2" />
+
+            <TextView
+                android:id="@+id/statsTextView2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="1" />
+
+            <TextView
+                android:id="@+id/statsTextView3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="0,50" />
+
+            <TextView
+                android:id="@+id/statsTextView4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="0,20" />
+
+            <TextView
+                android:id="@+id/statsTextView5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="0,10" />
+
+            <TextView
+                android:id="@+id/statsTextView6"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="0,05" />
+
+            <TextView
+                android:id="@+id/statsTextView7"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="0,02" />
+
+            <TextView
+                android:id="@+id/statsTextView8"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="0,01" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_alignParentTop="true"
+            android:layout_toRightOf="@+id/linearLayout3"
+            android:layout_toEndOf="@+id/linearLayout3"
+            android:layout_marginLeft="11dp"
+            android:layout_marginStart="11dp">
+
+            <TextView
+                android:id="@+id/statsTextViewPerc1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="TextView" />
+
+            <TextView
+                android:id="@+id/statsTextViewPerc2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="TextView" />
+
+            <TextView
+                android:id="@+id/statsTextViewPerc3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="TextView" />
+
+            <TextView
+                android:id="@+id/statsTextViewPerc4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="TextView" />
+
+            <TextView
+                android:id="@+id/statsTextViewPerc5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="TextView" />
+
+            <TextView
+                android:id="@+id/statsTextViewPerc6"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="TextView" />
+
+            <TextView
+                android:id="@+id/statsTextViewPerc7"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="TextView" />
+
+            <TextView
+                android:id="@+id/statsTextViewPerc8"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="TextView" />
+        </LinearLayout>
+    </RelativeLayout>
+
+</android.support.design.widget.CoordinatorLayout>

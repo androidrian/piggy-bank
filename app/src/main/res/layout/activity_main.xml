@@ -1,0 +1,426 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:context="com.example.filipe.piggybank.MainActivity">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:id="@+id/decButtonLayout">
+
+        <Button
+            android:text="-"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/decButton1"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:id="@+id/decButton1" />
+
+        <Button
+            android:text="-"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/decButton2"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:id="@+id/decButton2" />
+
+        <Button
+            android:text="-"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/decButton3"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:id="@+id/decButton3" />
+
+        <Button
+            android:text="-"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/decButton4"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:id="@+id/decButton4" />
+
+        <Button
+            android:text="-"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/decButton5"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:id="@+id/decButton5" />
+
+        <Button
+            android:text="-"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/decButton6"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:id="@+id/decButton6" />
+
+        <Button
+            android:text="-"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/decButton7"
+            android:layout_below="@+id/decButton7"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true" />
+
+        <Button
+            android:text="-"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/decButton8"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/incButtonsLayout"
+        android:layout_alignParentTop="true"
+        android:layout_toLeftOf="@+id/decButtonLayout"
+        android:layout_toStartOf="@+id/decButtonLayout">
+
+        <Button
+            android:id="@+id/incButton1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/incButton1"
+            android:minHeight="50dp"
+            android:text="+" />
+
+        <Button
+            android:text="+"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/incButton2"
+            android:layout_below="@+id/incButton2"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
+
+        <Button
+            android:text="+"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/incButton3"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:id="@+id/incButton3" />
+
+        <Button
+            android:text="+"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/incButton4"
+            android:layout_below="@+id/incButton4"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
+
+        <Button
+            android:text="+"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/incButton5"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:id="@+id/incButton5" />
+
+        <Button
+            android:text="+"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/incButton6"
+            android:layout_below="@+id/incButton6"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
+
+        <Button
+            android:text="+"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/incButton7"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:id="@+id/incButton7" />
+
+        <Button
+            android:text="+"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/incButton8"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:id="@+id/incButton8" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="20dp"
+        android:id="@+id/linearLayout"
+        android:layout_marginEnd="20dp"
+        android:layout_marginTop="7dp"
+        android:layout_alignParentTop="true"
+        android:layout_toLeftOf="@+id/incButtonsLayout"
+        android:layout_toStartOf="@+id/incButtonsLayout">
+
+        <EditText
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:text="0"
+            android:ems="10"
+            android:id="@+id/coinText1"
+            android:textSize="16sp"
+            android:fontFamily="sans-serif"
+            android:layout_width="50sp"
+            android:layout_marginTop="6dp"
+            android:textAlignment="center"/>
+
+        <EditText
+            android:layout_width="50sp"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:text="0"
+            android:ems="10"
+            android:id="@+id/coinText2"
+            android:textSize="16sp"
+            android:layout_marginTop="5dp"
+            android:textAlignment="center"/>
+
+        <EditText
+            android:layout_width="50sp"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:text="0"
+            android:ems="10"
+            android:id="@+id/coinText3"
+            android:textSize="16sp"
+            android:layout_marginTop="5dp"
+            android:textAlignment="center"/>
+
+        <EditText
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:text="0"
+            android:ems="10"
+            android:id="@+id/coinText4"
+            android:textSize="16sp"
+            android:layout_width="50sp"
+            android:layout_marginTop="5dp"
+            android:textAlignment="center"/>
+
+        <EditText
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:text="0"
+            android:ems="10"
+            android:id="@+id/coinText5"
+            android:textSize="16sp"
+            android:layout_width="50sp"
+            android:layout_marginTop="5dp"
+            android:textAlignment="center"/>
+
+        <EditText
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:text="0"
+            android:ems="10"
+            android:id="@+id/coinText6"
+            android:textSize="16sp"
+            android:layout_width="50sp"
+            android:layout_marginTop="5dp"
+            android:textAlignment="center"/>
+
+        <EditText
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:text="0"
+            android:ems="10"
+            android:id="@+id/coinText7"
+            android:textSize="16sp"
+            android:layout_width="50sp"
+            android:layout_marginTop="5dp"
+            android:textAlignment="center"/>
+
+        <EditText
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:text="0"
+            android:ems="10"
+            android:id="@+id/coinText8"
+            android:textSize="16sp"
+            android:layout_width="50sp"
+            android:layout_marginTop="5dp"
+            android:textAlignment="center"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/labelLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="17dp"
+        android:layout_marginRight="17dp"
+        android:layout_toLeftOf="@+id/linearLayout"
+        android:layout_toStartOf="@+id/linearLayout"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="79dp"
+            android:layout_height="44dp"
+            android:layout_above="@+id/labelLayout"
+            android:layout_alignEnd="@+id/labelLayout"
+            android:layout_alignRight="@+id/labelLayout"
+            app:srcCompat="@mipmap/doiseuros" />
+
+        <TextView
+            android:id="@+id/moedaText2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:lineSpacingExtra="10sp"
+            android:text="1 €"
+            android:textAlignment="center" />
+
+        <TextView
+            android:id="@+id/moedaText3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:text="0,50"
+            android:textAlignment="center" />
+
+        <TextView
+            android:id="@+id/moedaText4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:text="0.20"
+            android:textAlignment="center" />
+
+        <TextView
+            android:id="@+id/moedaText5"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:text="0.10"
+            android:textAlignment="center" />
+
+        <TextView
+            android:id="@+id/moedaText6"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:text="0.05"
+            android:textAlignment="center" />
+
+        <TextView
+            android:id="@+id/moedaText7"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:text="0.02"
+            android:textAlignment="center" />
+
+        <TextView
+            android:id="@+id/moedaText8"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:text="0.01"
+            android:textAlignment="center" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:id="@+id/linearLayout2">
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:text="0"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:id="@+id/totalTextView"
+                android:textAlignment="textEnd"
+                android:textSize="45sp"
+                android:fontFamily="sans-serif"
+                android:layout_weight="0.20"
+                android:layout_marginLeft="120dp" />
+
+            <TextView
+                android:text="€"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/currency"
+                android:layout_weight="1"
+                android:textSize="36sp"
+                android:textStyle="normal|bold" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/optionsLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/resetButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="RESET"
+                android:textAlignment="center" />
+
+            <Button
+                android:id="@+id/saveButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="SAVE" />
+
+            <Button
+                android:id="@+id/loadButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="LOAD" />
+
+            <Button
+                android:id="@+id/statsButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="STATS" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</RelativeLayout>
