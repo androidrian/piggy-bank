@@ -20,6 +20,7 @@ import java.io.File;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements TextWatcher {
@@ -34,6 +35,7 @@ public class MainActivity extends AppCompatActivity implements TextWatcher {
     final double VALUE_COIN_8 = 0.01;
 
     private TextView coinValue1,coinValue2,coinValue3,coinValue4,coinValue5,coinValue6,coinValue7,coinValue8,totalValue;
+    private TextView predictionTextView;
     private EditText numberCoins1, numberCoins2, numberCoins3, numberCoins4, numberCoins5, numberCoins6, numberCoins7, numberCoins8;
     private Button incButtonCoin1,incButtonCoin2,incButtonCoin3,incButtonCoin4,incButtonCoin5,incButtonCoin6,incButtonCoin7,incButtonCoin8;
     private Button decButtonCoin1,decButtonCoin2,decButtonCoin3,decButtonCoin4,decButtonCoin5,decButtonCoin6,decButtonCoin7,decButtonCoin8;
@@ -391,6 +393,8 @@ public class MainActivity extends AppCompatActivity implements TextWatcher {
         saveButton = (Button) findViewById(R.id.saveButton);
         loadButton = (Button) findViewById(R.id.loadButton);
         statsButton = (Button) findViewById(R.id.statsButton);
+
+        predictionTextView = (TextView) findViewById(R.id.predictionTextView);
     }
 
     private void setComponents()
@@ -455,6 +459,13 @@ public class MainActivity extends AppCompatActivity implements TextWatcher {
         double diffOfValue = diff * l_values.get(index-1);
         double totalValueBefore = Double.valueOf(totalValue.getText().toString());
         double totalValueUpdate = totalValueBefore + diffOfValue;
+
+        Prediction p = new Prediction();
+        int day1 = 1;
+        int day2 = 13;
+        double totalPredictionValue = p.getTotalPreditionOnTargetDay(totalValueUpdate,day1,day2);
+        String totalPrediction = String.valueOf(df.format(totalPredictionValue));
+        predictionTextView.setText(totalPrediction);
 
         return totalValueUpdate;
     }

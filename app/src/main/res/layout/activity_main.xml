@@ -360,28 +360,41 @@
         android:id="@+id/linearLayout2">
 
         <LinearLayout
-            android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:weightSum="1">
 
             <TextView
-                android:text="0"
+                android:id="@+id/predictionTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_weight="0.15"
+                android:text="Prediction"
+                android:textSize="18sp" />
 
+            <TextView
                 android:id="@+id/totalTextView"
-                android:textAlignment="textEnd"
-                android:textSize="45sp"
-                android:fontFamily="sans-serif"
-                android:layout_weight="0.20"
-                android:layout_marginLeft="120dp" />
-
-            <TextView
-                android:text="€"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+
+                android:layout_marginLeft="40dp"
+                android:layout_weight="0.15"
+                android:fontFamily="sans-serif"
+                android:gravity="center"
+                android:text="0"
+                android:textAlignment="center"
+                android:textSize="45sp" />
+
+            <TextView
                 android:id="@+id/currency"
-                android:layout_weight="1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_below="@+id/labelLayout"
+                android:layout_weight="0.15"
+                android:text="€"
                 android:textSize="36sp"
                 android:textStyle="normal|bold" />
 
