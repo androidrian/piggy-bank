@@ -66,10 +66,6 @@ public class MainActivity extends FragmentActivity implements TextWatcher {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        viewPager = (ViewPager) findViewById(R.id.view_pager);
-
-
-
 
         //joda-time initialization
         JodaTimeAndroid.init(this);
@@ -166,7 +162,7 @@ public class MainActivity extends FragmentActivity implements TextWatcher {
     //back to this later, just to generalize a method to set the listeners
 
 
-    public int getCorrespondingValueIndex(View v) {
+    public int getCorrespondingEditTextValueIndex(View v) {
         int index = 0;
 
         switch (v.getId()) {
@@ -498,12 +494,12 @@ public class MainActivity extends FragmentActivity implements TextWatcher {
         int totalNumberOfCoinsAfter = Integer.valueOf(numberOfCoins);
 
         int diff = totalNumberOfCoinsAfter - totalNumberOfCoinsBefore;
-        int correspondingValueIndex = getCorrespondingValueIndex(v);
+        int correspondingValueIndex = getCorrespondingEditTextValueIndex(v);
         double diffOfValue = diff * l_values.get(correspondingValueIndex);
         double totalValueBefore = Double.valueOf(totalValue.getText().toString());
         double totalValueUpdate = totalValueBefore + diffOfValue;
 
-        //Predition prototype
+        //Predition prototype BEGIN
         Prediction p = new Prediction();
         int day1 = 1;
         int day2 = 13;
@@ -517,7 +513,8 @@ public class MainActivity extends FragmentActivity implements TextWatcher {
 
 
     //this method is buggy
-    //este metodo talvez devesse ser void apenas para alterar o valor do total e depois arranjar outro metodo para devolver
+    //este metodo talvez devesse ser void apenas para alterar o valor do total
+    // e depois arranjar outro metodo para devolver
     public double addCoin(EditText editText){
         double total;
         String numberOfCoinsText = editText.getText().toString();
