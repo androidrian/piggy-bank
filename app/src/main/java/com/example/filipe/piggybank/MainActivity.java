@@ -4,6 +4,9 @@ import android.annotation.TargetApi;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Environment;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.view.ViewPager;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
@@ -14,16 +17,20 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.filipe.piggybank.Utils.CalculationsUtils;
+import com.example.filipe.piggybank.Utils.Services;
+
 import net.danlew.android.joda.JodaTimeAndroid;
 
 import java.io.File;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements TextWatcher {
+public class MainActivity extends FragmentActivity implements TextWatcher {
+
+    ViewPager viewPager;
 
     final double VALUE_COIN_1 = 2.0;
     final double VALUE_COIN_2 = 1.0;
@@ -34,13 +41,14 @@ public class MainActivity extends AppCompatActivity implements TextWatcher {
     final double VALUE_COIN_7 = 0.02;
     final double VALUE_COIN_8 = 0.01;
 
+    private String DEFAULT_VALUE = "0"; //value to be set at the beguinning of the app or reset
     private TextView coinValue1,coinValue2,coinValue3,coinValue4,coinValue5,coinValue6,coinValue7,coinValue8,totalValue;
     private TextView predictionTextView;
     private EditText numberCoins1, numberCoins2, numberCoins3, numberCoins4, numberCoins5, numberCoins6, numberCoins7, numberCoins8;
     private Button incButtonCoin1,incButtonCoin2,incButtonCoin3,incButtonCoin4,incButtonCoin5,incButtonCoin6,incButtonCoin7,incButtonCoin8;
     private Button decButtonCoin1,decButtonCoin2,decButtonCoin3,decButtonCoin4,decButtonCoin5,decButtonCoin6,decButtonCoin7,decButtonCoin8;
     private Button resetButton, loadButton, saveButton, statsButton;
-    private int index =0;
+
     private List<Double> l_values = new ArrayList<>();
     ArrayList<Integer> l_absoluteFr = new ArrayList<>();
 
@@ -50,26 +58,19 @@ public class MainActivity extends AppCompatActivity implements TextWatcher {
     private File dir = new File(root.getAbsolutePath() + "/piggybank");
     private File file = new File(dir,fileName);
 
-    DecimalFormat df = new DecimalFormat("#.00");
+    private DecimalFormat df = new DecimalFormat("#.00");
 
 
-    private String DEFAULT_VALUE = "0"; //value to be set at the beguinning of the app or reset
-
-
-
-    //update values from input of user (and the program)
-    //button for save
-    //save to file coins and total value
-    //read from file automatically when app opens
-    //delete records
-    //later, create new records for new piggy banks
-    //later, possibility for count coins with a temporay instance that can or cannot be saved
-    //multiple pippgybanks = multiple files (one for each)
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        viewPager = (ViewPager) findViewById(R.id.view_pager);
+
+
+
+
         //joda-time initialization
         JodaTimeAndroid.init(this);
 
@@ -93,6 +94,8 @@ public class MainActivity extends AppCompatActivity implements TextWatcher {
         }
 
     }
+
+
 
     protected boolean shouldAskPermissions() {
         return (Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP_MR1);
@@ -162,9 +165,48 @@ public class MainActivity extends AppCompatActivity implements TextWatcher {
 
     //back to this later, just to generalize a method to set the listeners
 
+
+    public int getCorrespondingValueIndex(View v) {
+        int index = 0;
+
+        switch (v.getId()) {
+            case R.id.coinText1:
+                index = 0;
+                break;
+
+            case R.id.coinText2:
+                index = 1;
+                break;
+
+            case R.id.coinText3:
+                index = 2;
+                break;
+
+            case R.id.coinText4:
+                index = 3;
+                break;
+
+            case R.id.coinText5:
+                index = 4;
+                break;
+
+            case R.id.coinText6:
+                index = 5;
+                break;
+
+            case R.id.coinText7:
+                index = 6;
+                break;
+
+            case R.id.coinText8:
+                index = 7;
+                break;
+        }
+        return index;
+    }
+
     private void setButtonListeners()
     {
-
 
         incButtonCoin1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -172,8 +214,8 @@ public class MainActivity extends AppCompatActivity implements TextWatcher {
 
                 int index = 1;
                 double totalValueUpdate;
-                totalValueUpdate = Double.valueOf(df.format(updateTotalValue(v,numberCoins1,index)));
-                totalValueUpdate = Double.valueOf(df.format(totalValueUpdate));
+                totalValueUpdate = Double.valueOf(df.format(updateTotalValue(v,numberCoins1)));
+
 
                 totalValue.setTag("TRIGGER");
                 totalValue.setText("GENESIS");
@@ -188,7 +230,7 @@ public class MainActivity extends AppCompatActivity implements TextWatcher {
             @Override
             public void onClick(View v) {
                 int index = 2;
-                double totalValueUpdate = Double.valueOf(df.format(updateTotalValue(v,numberCoins2,index)));
+                double totalValueUpdate = Double.valueOf(df.format(updateTotalValue(v,numberCoins2)));
                 totalValue.setText(String.valueOf(totalValueUpdate));
             }
         });
@@ -197,7 +239,7 @@ public class MainActivity extends AppCompatActivity implements TextWatcher {
             @Override
             public void onClick(View v) {
                 int index = 3;
-                double totalValueUpdate = Double.valueOf(df.format(updateTotalValue(v,numberCoins3,index)));
+                double totalValueUpdate = Double.valueOf(df.format(updateTotalValue(v,numberCoins3)));
                 totalValue.setText(String.valueOf(totalValueUpdate));
             }
         });
@@ -206,7 +248,7 @@ public class MainActivity extends AppCompatActivity implements TextWatcher {
             @Override
             public void onClick(View v) {
                 int index = 4;
-                double totalValueUpdate = Double.valueOf(df.format(updateTotalValue(v,numberCoins4,index)));
+                double totalValueUpdate = Double.valueOf(df.format(updateTotalValue(v,numberCoins4)));
                 totalValue.setText(String.valueOf(totalValueUpdate));
             }
         });
@@ -214,7 +256,7 @@ public class MainActivity extends AppCompatActivity implements TextWatcher {
             @Override
             public void onClick(View v) {
                 int index = 5;
-                double totalValueUpdate = Double.valueOf(df.format(updateTotalValue(v,numberCoins5,index)));
+                double totalValueUpdate = Double.valueOf(df.format(updateTotalValue(v,numberCoins5)));
                 totalValue.setText(String.valueOf(totalValueUpdate));
             }
         });
@@ -222,7 +264,7 @@ public class MainActivity extends AppCompatActivity implements TextWatcher {
             @Override
             public void onClick(View v) {
                 int index = 6;
-                double totalValueUpdate = Double.valueOf(df.format(updateTotalValue(v,numberCoins6,index)));
+                double totalValueUpdate = Double.valueOf(df.format(updateTotalValue(v,numberCoins6)));
                 totalValue.setText(String.valueOf(totalValueUpdate));
             }
         });
@@ -230,7 +272,7 @@ public class MainActivity extends AppCompatActivity implements TextWatcher {
             @Override
             public void onClick(View v) {
                 int index = 7;
-                double totalValueUpdate = Double.valueOf(df.format(updateTotalValue(v,numberCoins7,index)));
+                double totalValueUpdate = Double.valueOf(df.format(updateTotalValue(v,numberCoins7)));
                 totalValue.setText(String.valueOf(totalValueUpdate));
             }
         });
@@ -238,7 +280,7 @@ public class MainActivity extends AppCompatActivity implements TextWatcher {
             @Override
             public void onClick(View v) {
                 int index = 8;
-                double totalValueUpdate = Double.valueOf(df.format(updateTotalValue(v,numberCoins8,index)));
+                double totalValueUpdate = Double.valueOf(df.format(updateTotalValue(v,numberCoins8)));
                 totalValue.setText(String.valueOf(totalValueUpdate));
 
             }
@@ -250,7 +292,7 @@ public class MainActivity extends AppCompatActivity implements TextWatcher {
             @Override
             public void onClick(View v) {
                 int index = 1;
-                double totalValueUpdate = updateTotalValue(v,numberCoins1,index);
+                double totalValueUpdate = updateTotalValue(v,numberCoins1);
                 totalValue.setText(String.valueOf(totalValueUpdate));
             }
         });
@@ -259,7 +301,7 @@ public class MainActivity extends AppCompatActivity implements TextWatcher {
             @Override
             public void onClick(View v) {
                 int index = 2;
-                double totalValueUpdate = updateTotalValue(v,numberCoins2,index);
+                double totalValueUpdate = updateTotalValue(v,numberCoins2);
                 totalValue.setText(String.valueOf(totalValueUpdate));
             }
         });
@@ -268,7 +310,7 @@ public class MainActivity extends AppCompatActivity implements TextWatcher {
             @Override
             public void onClick(View v) {
                 int index = 3;
-                double totalValueUpdate = updateTotalValue(v,numberCoins3,index);
+                double totalValueUpdate = updateTotalValue(v,numberCoins3);
                 totalValue.setText(String.valueOf(totalValueUpdate));
             }
         });
@@ -277,7 +319,7 @@ public class MainActivity extends AppCompatActivity implements TextWatcher {
             @Override
             public void onClick(View v) {
                 int index = 4;
-                double totalValueUpdate = updateTotalValue(v,numberCoins4,index);
+                double totalValueUpdate = updateTotalValue(v,numberCoins4);
                 totalValue.setText(String.valueOf(totalValueUpdate));
             }
         });
@@ -285,7 +327,7 @@ public class MainActivity extends AppCompatActivity implements TextWatcher {
             @Override
             public void onClick(View v) {
                 int index = 5;
-                double totalValueUpdate = updateTotalValue(v,numberCoins5,index);
+                double totalValueUpdate = updateTotalValue(v,numberCoins5);
                 totalValue.setText(String.valueOf(totalValueUpdate));
             }
         });
@@ -293,7 +335,7 @@ public class MainActivity extends AppCompatActivity implements TextWatcher {
             @Override
             public void onClick(View v) {
                 int index = 6;
-                double totalValueUpdate = updateTotalValue(v,numberCoins6,index);
+                double totalValueUpdate = updateTotalValue(v,numberCoins6);
                 totalValue.setText(String.valueOf(totalValueUpdate));
             }
         });
@@ -301,7 +343,7 @@ public class MainActivity extends AppCompatActivity implements TextWatcher {
             @Override
             public void onClick(View v) {
                 int index = 7;
-                double totalValueUpdate = updateTotalValue(v,numberCoins7,index);
+                double totalValueUpdate = updateTotalValue(v,numberCoins7);
                 totalValue.setText(String.valueOf(totalValueUpdate));
             }
         });
@@ -309,7 +351,7 @@ public class MainActivity extends AppCompatActivity implements TextWatcher {
             @Override
             public void onClick(View v) {
                 int index = 8;
-                double totalValueUpdate = updateTotalValue(v,numberCoins8,index);
+                double totalValueUpdate = updateTotalValue(v,numberCoins8);
                 totalValue.setText(String.valueOf(totalValueUpdate));
             }
         });
@@ -424,7 +466,7 @@ public class MainActivity extends AppCompatActivity implements TextWatcher {
 
     }
 
-    public double updateTotalValue(View v, EditText editText, int index)
+    public double updateTotalValue(View v, EditText editText)
     {
 
         String idAsString,nameTypeOfButton,numberOfCoins;
@@ -456,16 +498,19 @@ public class MainActivity extends AppCompatActivity implements TextWatcher {
         int totalNumberOfCoinsAfter = Integer.valueOf(numberOfCoins);
 
         int diff = totalNumberOfCoinsAfter - totalNumberOfCoinsBefore;
-        double diffOfValue = diff * l_values.get(index-1);
+        int correspondingValueIndex = getCorrespondingValueIndex(v);
+        double diffOfValue = diff * l_values.get(correspondingValueIndex);
         double totalValueBefore = Double.valueOf(totalValue.getText().toString());
         double totalValueUpdate = totalValueBefore + diffOfValue;
 
+        //Predition prototype
         Prediction p = new Prediction();
         int day1 = 1;
         int day2 = 13;
         double totalPredictionValue = p.getTotalPreditionOnTargetDay(totalValueUpdate,day1,day2);
         String totalPrediction = String.valueOf(df.format(totalPredictionValue));
         predictionTextView.setText(totalPrediction);
+        //Prototype END
 
         return totalValueUpdate;
     }
@@ -532,7 +577,7 @@ public class MainActivity extends AppCompatActivity implements TextWatcher {
     public void afterTextChanged(Editable s) {
 
         double total;
-        Calcs calc = new Calcs();
+        CalculationsUtils calc = new CalculationsUtils();
         total = calc.getTotalSumOfCoins(getListWithEditTexts(),l_values);
         totalValue.setText(String.valueOf(total));
         Toast.makeText(this,"afterTextChanged",Toast.LENGTH_LONG);

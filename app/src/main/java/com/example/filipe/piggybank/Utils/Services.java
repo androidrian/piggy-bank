@@ -1,4 +1,4 @@
-package com.example.filipe.piggybank;
+package com.example.filipe.piggybank.Utils;
 
 import android.app.Activity;
 import android.content.Context;

@@ -1,6 +1,7 @@
-package com.example.filipe.piggybank;
+package com.example.filipe.piggybank.Utils;
 
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 
 import java.text.DecimalFormat;
@@ -11,13 +12,13 @@ import java.util.List;
  * Created by Filipe on 23/02/2017.
  */
 
-public class Calcs {
+public class CalculationsUtils {
 
     private String DEFAULT_VALUE = "0";
 
     DecimalFormat df = new DecimalFormat("#.000");
 
-    public Calcs()
+    public CalculationsUtils()
     {
 
     }
@@ -58,42 +59,60 @@ public class Calcs {
         return total;
     }
 
-    public double getDifferenceOfTotalValueBeforeAfter(View v, EditText editText)
+    /**
+     *
+     * @param view
+     * @param coinInputField
+     * @return
+     */
+    public double getDifferenceOfFinalValueInGivenCoinInputField(View view, EditText coinInputField)
     {
 
-        String idAsString,nameTypeOfButton,numberOfCoins;
-        int totalNumberOfCoinsBefore;
-
-        idAsString = v.getResources().getResourceEntryName(v.getId());
-        nameTypeOfButton = idAsString.substring(0,3);//"inc" or "dec" of increment and decrement
-        numberOfCoins = editText.getText().toString();
+        String nameTypeOfButton,numberOfCoinsString;
+        nameTypeOfButton = getTypeOfButtonName(view);//incrementButton or decrementButton
+        nameTypeOfButton = nameTypeOfButton.substring(0,3);//"inc" or "dec"
+        numberOfCoinsString = coinInputField.getText().toString();
 
         //index--;
-
-        if(numberOfCoins.equalsIgnoreCase(""))
+        int totalNumberOfCoinsBefore, totalNumberOfCoinsAfter;
+        int diff;
+        if(numberOfCoinsString.equalsIgnoreCase(""))
         {
             totalNumberOfCoinsBefore = 0;
         }
         else
         {
-            totalNumberOfCoinsBefore = Integer.valueOf(numberOfCoins);
+            totalNumberOfCoinsBefore = Integer.valueOf(numberOfCoinsString);
         }
 
         if(nameTypeOfButton.equalsIgnoreCase("inc")) {
-            editText.setText(String.valueOf((int) addCoin(editText)));
+            addCoin(coinInputField);
         }
-        if(nameTypeOfButton.equalsIgnoreCase("dec"))
-        {
-            editText.setText(String.valueOf((int) takeCoin(editText)));
+        if(nameTypeOfButton.equalsIgnoreCase("dec")) {
+           takeCoin(coinInputField);
         }
 
-        int totalNumberOfCoinsAfter = Integer.valueOf(numberOfCoins);
+        totalNumberOfCoinsAfter = Integer.valueOf(numberOfCoinsString);
 
-        int diff = totalNumberOfCoinsAfter - totalNumberOfCoinsBefore;
+        diff = totalNumberOfCoinsAfter - totalNumberOfCoinsBefore;
 
 
         return diff;
     }
+
+
+    private String getTypeOfButtonName(View v)
+    {
+        String nameTypeOfButton, idAsString;
+
+        idAsString = v.getResources().getResourceEntryName(v.getId());
+        nameTypeOfButton = idAsString.substring(0,3);//"inc" or "dec" of increment and decrement
+
+        return nameTypeOfButton;
+
+    }
+
+
 
     public double updateTotalValue(double diff, List<Double> l_values, int index, EditText totalValue)
     {
@@ -106,16 +125,16 @@ public class Calcs {
 
     //this method is buggy
     //este metodo talvez devesse ser void apenas para alterar o valor do total e depois arranjar outro metodo para devolver
-    public double addCoin(EditText editText){
+    private void addCoin(EditText coinInputField){
         double total;
-        String numberOfCoinsText = editText.getText().toString();
+        String numberOfCoinsText = coinInputField.getText().toString();
 
         //se nao tiver nada para nao dar null tem que ficar a zero
         //ou entao fazer catch do NullPointerException
         if(numberOfCoinsText.equalsIgnoreCase(""))
         {
             //total = 0;
-            editText.setText(DEFAULT_VALUE);
+            coinInputField.setText(DEFAULT_VALUE);
             total = Integer.valueOf(numberOfCoinsText);
         }
         else
@@ -124,14 +143,17 @@ public class Calcs {
             total++;
         }
 
-        return total;
+        coinInputField.setText(String.valueOf((total)));
+
+
     }
+
     //este método tb deveria talvez ser void...convém depois ver o que se passa
-    public double takeCoin(EditText editText){
+    private void takeCoin(EditText coinInputField){
         double total;
         String numberOfCoins;
 
-        numberOfCoins = editText.getText().toString();
+        numberOfCoins = coinInputField.getText().toString();
 
         total = Integer.valueOf(numberOfCoins);
         total--;
@@ -140,7 +162,7 @@ public class Calcs {
         {
             total = 0;
         }
-        return total;
+        coinInputField.setText(String.valueOf((total)));
     }
 
 
@@ -161,30 +183,31 @@ public class Calcs {
     }
 
     /**
-     * Calculate the relative frequency (Absolute Frequency/Total) of the number of coins that exists in the piggy bank
+     * Calculate the relative frequency = (Absolute Frequency/Total)
+     * of the number of coins that exists in the piggy bank
      * @param l_absoluteValues the list the absolute frequency values of each coin
      * @return the list with relative frequency of each coin
      */
     public ArrayList<Double> getListWithRelativeFrequencyOfCoins(List<Integer> l_absoluteValues)
     {
-        ArrayList<Double> l_relativeFrOfCoins = new ArrayList<>();
+        ArrayList<Double> l_rFrequencyOfCoins = new ArrayList<>();
+        int totalCoinsInPiggyBank =
+                getTotalNumberOfCoinsInPiggyBank(l_absoluteValues);
 
-        int totalCoinsInPiggyBank = getTotalNumberOfCoinsInPiggyBank(l_absoluteValues);
-       for(Integer absoluteFrOfCoin : l_absoluteValues) {
-           double relativeFrOfCoin;
-           if (totalCoinsInPiggyBank != 0)//can't divide by 0
-           {
-               double value = (double)absoluteFrOfCoin/totalCoinsInPiggyBank;
-               relativeFrOfCoin = Double.valueOf(df.format(value));
-               l_relativeFrOfCoins.add(relativeFrOfCoin);
-           }else
-           {
-               relativeFrOfCoin = 0;
-               l_relativeFrOfCoins.add(relativeFrOfCoin);
+        for(Integer absoluteValue : l_absoluteValues) {
+
+           double rFrequencyOfCoin;
+           if (totalCoinsInPiggyBank != 0){//can't divide by 0
+                double value =
+                        (double)absoluteValue/totalCoinsInPiggyBank;
+               rFrequencyOfCoin = Double.valueOf(df.format(value));
+               l_rFrequencyOfCoins.add(rFrequencyOfCoin);
+           }else{
+               rFrequencyOfCoin = 0;
+               l_rFrequencyOfCoins.add(rFrequencyOfCoin);
            }
         }
-
-        return l_relativeFrOfCoins;
+        return l_rFrequencyOfCoins;
     }
 
     /**
