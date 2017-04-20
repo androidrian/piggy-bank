@@ -46,6 +46,8 @@ public class TotalFragment extends Fragment {
 
     }
 
+
+
     private String getIntegerPart(String totalValue)
     {
         return totalValue.substring(0,1);
