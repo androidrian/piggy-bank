@@ -1,13 +1,10 @@
 package com.example.filipe.piggybank.Fragments;
 
 
-import android.annotation.TargetApi;
-import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.v4.app.Fragment;
-import android.text.Editable;
+import android.support.v4.util.SimpleArrayMap;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,8 +14,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.filipe.piggybank.R;
-import com.example.filipe.piggybank.Utils.CalculationsUtils;
-import com.example.filipe.piggybank.Utils.Prediction;
 import com.example.filipe.piggybank.Utils.Services;
 
 import java.io.File;
@@ -26,6 +21,7 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 public class CoinsFragment extends Fragment implements View.OnClickListener {
 
@@ -43,8 +39,7 @@ public class CoinsFragment extends Fragment implements View.OnClickListener {
     final double VALUE_COIN_8 = 0.01;
 
     private String DEFAULT_VALUE = "0"; //value to be set at the beguinning of the app or reset
-    private TextView coinValue1,coinValue2,coinValue3,coinValue4,coinValue5,coinValue6,coinValue7,coinValue8,totalValue;
-    private TextView predictionTextView;
+    private TextView totalValueTextView;
     private EditText numberCoins1, numberCoins2, numberCoins3, numberCoins4, numberCoins5, numberCoins6, numberCoins7, numberCoins8;
     private Button incButtonCoin1,incButtonCoin2,incButtonCoin3,incButtonCoin4,incButtonCoin5,incButtonCoin6,incButtonCoin7,incButtonCoin8;
     private Button decButtonCoin1,decButtonCoin2,decButtonCoin3,decButtonCoin4,decButtonCoin5,decButtonCoin6,decButtonCoin7,decButtonCoin8;
@@ -52,6 +47,8 @@ public class CoinsFragment extends Fragment implements View.OnClickListener {
 
     private List<Double> l_values = new ArrayList<>();
     ArrayList<Integer> l_absoluteFr = new ArrayList<>();
+
+    private SimpleArrayMap<Integer,Integer> mMapOfIndexToCoinTextView = new SimpleArrayMap<>();
 
 
     private String fileName = "piggyBankRecords.txt";
@@ -106,7 +103,7 @@ public class CoinsFragment extends Fragment implements View.OnClickListener {
             case "incrementButton":
                 Toast.makeText(getContext(),func,Toast.LENGTH_SHORT).show();
                 totalValueUpdate = Double.valueOf(df.format(updateTotalValue(v,numberCoins1)));
-//                totalValue.setText(String.valueOf(totalValueUpdate));
+                totalValueTextView.setText(String.valueOf(totalValueUpdate));
                 break;
             case "decrementButton":
                 Toast.makeText(getContext(),func,Toast.LENGTH_SHORT).show();
@@ -121,9 +118,58 @@ public class CoinsFragment extends Fragment implements View.OnClickListener {
 
 //        double totalValueUpdate;
 //        totalValueUpdate = Double.valueOf(df.format(updateTotalValue(v,numberCoins1)));
-//        totalValue.setText(String.valueOf(totalValueUpdate));
+//        totalValueTextView.setText(String.valueOf(totalValueUpdate));
     }
 
+    
+    public double updateTotalValue(View v, EditText editText)
+    {
+
+        String idAsString,nameTypeOfButton,numberOfCoins;
+        int totalNumberOfCoinsBefore;
+
+        idAsString = v.getResources().getResourceEntryName(v.getId());
+        nameTypeOfButton = idAsString.substring(0,3);//"inc" or "dec" of increment and decrement
+        numberOfCoins = editText.getText().toString();
+
+        //index--;
+
+        if(numberOfCoins.equalsIgnoreCase(""))
+        {
+            totalNumberOfCoinsBefore = 0;
+        }
+        else
+        {
+            totalNumberOfCoinsBefore = Integer.valueOf(numberOfCoins);
+        }
+
+        if(nameTypeOfButton.equalsIgnoreCase("inc")) {
+            editText.setText(String.valueOf((int) addCoin(editText)));
+        }
+        if(nameTypeOfButton.equalsIgnoreCase("dec"))
+        {
+            editText.setText(String.valueOf((int) takeCoin(editText)));
+        }
+
+        int totalNumberOfCoinsAfter = Integer.valueOf(numberOfCoins);
+
+        int diff = totalNumberOfCoinsAfter - totalNumberOfCoinsBefore;
+        int correspondingValueIndex = getCorrespondingEditTextValueIndex(v);
+        double diffOfValue = diff * l_values.get(correspondingValueIndex);
+        double totalValueBefore = Double.valueOf(totalValueTextView.getText().toString());
+        double totalValueUpdate = totalValueBefore + diffOfValue;
+
+//        //Predition prototype BEGIN
+//        Prediction p = new Prediction();
+//        int day1 = 1;
+//        int day2 = 13;
+//        double totalPredictionValue = p.getTotalPreditionOnTargetDay(totalValueUpdate,day1,day2);
+//        String totalPrediction = String.valueOf(df.format(totalPredictionValue));
+//        predictionTextView.setText(totalPrediction);
+//        //Prototype END
+
+        return totalValueUpdate;
+    }
 
     private void setOnClickList()
     {
@@ -151,6 +197,10 @@ public class CoinsFragment extends Fragment implements View.OnClickListener {
     }
 
 
+    private void updateToTotalTextField(Double totalValueToUpdate)
+    {
+
+    }
 
 
 
@@ -204,6 +254,8 @@ public class CoinsFragment extends Fragment implements View.OnClickListener {
         return l_incButtons;
     }
 
+
+
     //back to this later, just to generalize a method to set the listeners
 
 
@@ -255,7 +307,7 @@ public class CoinsFragment extends Fragment implements View.OnClickListener {
 
                 double totalValueUpdate;
                 totalValueUpdate = Double.valueOf(df.format(updateTotalValue(v,numberCoins1)));
-                totalValue.setText(String.valueOf(totalValueUpdate));
+                totalValueTextView.setText(String.valueOf(totalValueUpdate));
 
             }
         });
@@ -264,7 +316,7 @@ public class CoinsFragment extends Fragment implements View.OnClickListener {
             @Override
             public void onClick(View v) {
                 double totalValueUpdate = Double.valueOf(df.format(updateTotalValue(v,numberCoins2)));
-                totalValue.setText(String.valueOf(totalValueUpdate));
+                totalValueTextView.setText(String.valueOf(totalValueUpdate));
             }
         });
 
@@ -272,7 +324,7 @@ public class CoinsFragment extends Fragment implements View.OnClickListener {
             @Override
             public void onClick(View v) {
                 double totalValueUpdate = Double.valueOf(df.format(updateTotalValue(v,numberCoins3)));
-                totalValue.setText(String.valueOf(totalValueUpdate));
+                totalValueTextView.setText(String.valueOf(totalValueUpdate));
             }
         });
 
@@ -280,35 +332,35 @@ public class CoinsFragment extends Fragment implements View.OnClickListener {
             @Override
             public void onClick(View v) {
                 double totalValueUpdate = Double.valueOf(df.format(updateTotalValue(v,numberCoins4)));
-                totalValue.setText(String.valueOf(totalValueUpdate));
+                totalValueTextView.setText(String.valueOf(totalValueUpdate));
             }
         });
         incButtonCoin5.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 double totalValueUpdate = Double.valueOf(df.format(updateTotalValue(v,numberCoins5)));
-                totalValue.setText(String.valueOf(totalValueUpdate));
+                totalValueTextView.setText(String.valueOf(totalValueUpdate));
             }
         });
         incButtonCoin6.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 double totalValueUpdate = Double.valueOf(df.format(updateTotalValue(v,numberCoins6)));
-                totalValue.setText(String.valueOf(totalValueUpdate));
+                totalValueTextView.setText(String.valueOf(totalValueUpdate));
             }
         });
         incButtonCoin7.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 double totalValueUpdate = Double.valueOf(df.format(updateTotalValue(v,numberCoins7)));
-                totalValue.setText(String.valueOf(totalValueUpdate));
+                totalValueTextView.setText(String.valueOf(totalValueUpdate));
             }
         });
         incButtonCoin8.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 double totalValueUpdate = Double.valueOf(df.format(updateTotalValue(v,numberCoins8)));
-                totalValue.setText(String.valueOf(totalValueUpdate));
+                totalValueTextView.setText(String.valueOf(totalValueUpdate));
 
             }
         });
@@ -319,7 +371,7 @@ public class CoinsFragment extends Fragment implements View.OnClickListener {
             @Override
             public void onClick(View v) {
                 double totalValueUpdate = updateTotalValue(v,numberCoins1);
-                totalValue.setText(String.valueOf(totalValueUpdate));
+                totalValueTextView.setText(String.valueOf(totalValueUpdate));
             }
         });
 
@@ -327,7 +379,7 @@ public class CoinsFragment extends Fragment implements View.OnClickListener {
             @Override
             public void onClick(View v) {
                 double totalValueUpdate = updateTotalValue(v,numberCoins2);
-                totalValue.setText(String.valueOf(totalValueUpdate));
+                totalValueTextView.setText(String.valueOf(totalValueUpdate));
             }
         });
 
@@ -335,7 +387,7 @@ public class CoinsFragment extends Fragment implements View.OnClickListener {
             @Override
             public void onClick(View v) {
                 double totalValueUpdate = updateTotalValue(v,numberCoins3);
-                totalValue.setText(String.valueOf(totalValueUpdate));
+                totalValueTextView.setText(String.valueOf(totalValueUpdate));
             }
         });
 
@@ -343,35 +395,35 @@ public class CoinsFragment extends Fragment implements View.OnClickListener {
             @Override
             public void onClick(View v) {
                 double totalValueUpdate = updateTotalValue(v,numberCoins4);
-                totalValue.setText(String.valueOf(totalValueUpdate));
+                totalValueTextView.setText(String.valueOf(totalValueUpdate));
             }
         });
         decButtonCoin5.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 double totalValueUpdate = updateTotalValue(v,numberCoins5);
-                totalValue.setText(String.valueOf(totalValueUpdate));
+                totalValueTextView.setText(String.valueOf(totalValueUpdate));
             }
         });
         decButtonCoin6.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 double totalValueUpdate = updateTotalValue(v,numberCoins6);
-                totalValue.setText(String.valueOf(totalValueUpdate));
+                totalValueTextView.setText(String.valueOf(totalValueUpdate));
             }
         });
         decButtonCoin7.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 double totalValueUpdate = updateTotalValue(v,numberCoins7);
-                totalValue.setText(String.valueOf(totalValueUpdate));
+                totalValueTextView.setText(String.valueOf(totalValueUpdate));
             }
         });
         decButtonCoin8.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 double totalValueUpdate = updateTotalValue(v,numberCoins8);
-                totalValue.setText(String.valueOf(totalValueUpdate));
+                totalValueTextView.setText(String.valueOf(totalValueUpdate));
             }
         });
 
@@ -394,7 +446,7 @@ public class CoinsFragment extends Fragment implements View.OnClickListener {
             @Override
             public void onClick(View v) {
                 Services service = new Services();
-                service.writeToSD(getListOfEditTextAsString(),v.getContext(),totalValue);
+                service.writeToSD(getListOfEditTextAsString(),v.getContext(), totalValueTextView);
             }
         });
 
@@ -446,7 +498,7 @@ public class CoinsFragment extends Fragment implements View.OnClickListener {
         decButtonCoin8 = (Button) view.findViewById(R.id.decButton8);
 
         //initialize TextViews
-        totalValue = (TextView) view.findViewById(R.id.totalTextView);
+        totalValueTextView = (TextView) view.findViewById(R.id.totalTextView);
 
         //options buttons
 
@@ -485,54 +537,7 @@ public class CoinsFragment extends Fragment implements View.OnClickListener {
 
     }
 
-    public double updateTotalValue(View v, EditText editText)
-    {
 
-        String idAsString,nameTypeOfButton,numberOfCoins;
-        int totalNumberOfCoinsBefore;
-
-        idAsString = v.getResources().getResourceEntryName(v.getId());
-        nameTypeOfButton = idAsString.substring(0,3);//"inc" or "dec" of increment and decrement
-        numberOfCoins = editText.getText().toString();
-
-        //index--;
-
-        if(numberOfCoins.equalsIgnoreCase(""))
-        {
-            totalNumberOfCoinsBefore = 0;
-        }
-        else
-        {
-            totalNumberOfCoinsBefore = Integer.valueOf(numberOfCoins);
-        }
-
-        if(nameTypeOfButton.equalsIgnoreCase("inc")) {
-            editText.setText(String.valueOf((int) addCoin(editText)));
-        }
-        if(nameTypeOfButton.equalsIgnoreCase("dec"))
-        {
-            editText.setText(String.valueOf((int) takeCoin(editText)));
-        }
-
-        int totalNumberOfCoinsAfter = Integer.valueOf(numberOfCoins);
-
-        int diff = totalNumberOfCoinsAfter - totalNumberOfCoinsBefore;
-        int correspondingValueIndex = getCorrespondingEditTextValueIndex(v);
-        double diffOfValue = diff * l_values.get(correspondingValueIndex);
-        double totalValueBefore = Double.valueOf(totalValue.getText().toString());
-        double totalValueUpdate = totalValueBefore + diffOfValue;
-
-//        //Predition prototype BEGIN
-//        Prediction p = new Prediction();
-//        int day1 = 1;
-//        int day2 = 13;
-//        double totalPredictionValue = p.getTotalPreditionOnTargetDay(totalValueUpdate,day1,day2);
-//        String totalPrediction = String.valueOf(df.format(totalPredictionValue));
-//        predictionTextView.setText(totalPrediction);
-//        //Prototype END
-
-        return totalValueUpdate;
-    }
 
 
     //this method is buggy

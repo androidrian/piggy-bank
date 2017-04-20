@@ -17,6 +17,7 @@ import com.example.filipe.piggybank.Fragments.CoinsFragment;
 import com.example.filipe.piggybank.Fragments.NotesFragment;
 
 import com.example.filipe.piggybank.Fragments.StatsFragment;
+import com.example.filipe.piggybank.Fragments.TotalFragment;
 
 
 public class MainActivity extends AppCompatActivity{
@@ -55,6 +56,7 @@ public class MainActivity extends AppCompatActivity{
     public void setupViewPager(ViewPager viewPager)
     {
         SectionsPageAdapter adapter = new SectionsPageAdapter(getSupportFragmentManager());
+        adapter.addFragment(new TotalFragment(),"Total");
         adapter.addFragment(new CoinsFragment(),"coins");
         adapter.addFragment(new NotesFragment(),"Notes");
         adapter.addFragment(new StatsFragment(),"Stats");
