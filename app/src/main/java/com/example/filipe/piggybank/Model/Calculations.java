@@ -1,4 +1,4 @@
-package com.example.filipe.piggybank.Utils;
+package com.example.filipe.piggybank.Model;
 
 import android.view.View;
 import android.widget.Button;
@@ -12,13 +12,13 @@ import java.util.List;
  * Created by Filipe on 23/02/2017.
  */
 
-public class CalculationsUtils {
+public class Calculations {
 
     private String DEFAULT_VALUE = "0";
 
     DecimalFormat df = new DecimalFormat("#.000");
 
-    public CalculationsUtils()
+    public Calculations()
     {
 
     }

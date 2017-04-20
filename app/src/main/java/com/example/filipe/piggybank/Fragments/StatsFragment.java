@@ -1,7 +1,5 @@
 package com.example.filipe.piggybank.Fragments;
 
-import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -10,10 +8,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.filipe.piggybank.R;
-import com.example.filipe.piggybank.Utils.CalculationsUtils;
+import com.example.filipe.piggybank.Model.Calculations;
 
 import java.util.ArrayList;
 
@@ -98,7 +95,7 @@ public class StatsFragment extends Fragment {
 
     private void setCoinPercentageValues()
     {
-        CalculationsUtils calc = new CalculationsUtils();
+        Calculations calc = new Calculations();
 
         ArrayList<Double> l_relativeFr = calc.getListWithRelativeFrequencyOfCoins(l_coinsAbsoluteFrequency);
         System.out.println("RELATIVE FREQUENCY LIST");

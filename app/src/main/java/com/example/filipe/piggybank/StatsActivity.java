@@ -6,7 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.filipe.piggybank.Utils.CalculationsUtils;
+import com.example.filipe.piggybank.Model.Calculations;
 
 import java.util.ArrayList;
 
@@ -76,7 +76,7 @@ public class StatsActivity extends AppCompatActivity {
 
     private void setCoinPercentageValues()
     {
-        CalculationsUtils calc = new CalculationsUtils();
+        Calculations calc = new Calculations();
 
         ArrayList<Double> l_relativeFr = calc.getListWithRelativeFrequencyOfCoins(l_coinsAbsoluteFrequency);
         System.out.println("RELATIVE FREQUENCY LIST");

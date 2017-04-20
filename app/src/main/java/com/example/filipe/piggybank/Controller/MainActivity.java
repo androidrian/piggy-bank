@@ -1,4 +1,4 @@
-package com.example.filipe.piggybank;
+package com.example.filipe.piggybank.Controller;
 
 import android.annotation.TargetApi;
 
@@ -16,8 +16,10 @@ import android.util.Log;
 import com.example.filipe.piggybank.Fragments.CoinsFragment;
 import com.example.filipe.piggybank.Fragments.NotesFragment;
 
+import com.example.filipe.piggybank.Fragments.SectionsPageAdapter;
 import com.example.filipe.piggybank.Fragments.StatsFragment;
 import com.example.filipe.piggybank.Fragments.TotalFragment;
+import com.example.filipe.piggybank.R;
 
 import net.danlew.android.joda.JodaTimeAndroid;
 

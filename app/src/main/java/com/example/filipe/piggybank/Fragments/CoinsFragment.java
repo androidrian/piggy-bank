@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.support.v4.app.Fragment;
 import android.support.v4.util.SimpleArrayMap;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,7 +43,7 @@ public class CoinsFragment extends Fragment implements View.OnClickListener {
     private EditText numberCoins1, numberCoins2, numberCoins3, numberCoins4, numberCoins5, numberCoins6, numberCoins7, numberCoins8;
     private Button incButtonCoin1,incButtonCoin2,incButtonCoin3,incButtonCoin4,incButtonCoin5,incButtonCoin6,incButtonCoin7,incButtonCoin8;
     private Button decButtonCoin1,decButtonCoin2,decButtonCoin3,decButtonCoin4,decButtonCoin5,decButtonCoin6,decButtonCoin7,decButtonCoin8;
-    private Button resetButton, loadButton, saveButton, statsButton;
+    private Button resetButton, loadButton, saveButton;
 
     private List<Double> l_values = new ArrayList<>();
     ArrayList<Integer> l_absoluteFr = new ArrayList<>();
@@ -62,13 +63,18 @@ public class CoinsFragment extends Fragment implements View.OnClickListener {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_coins_layout, container, false);
-        initComponents(view);
-        setComponents();
+        initWidgetComponents(view);
+        setDefaultValuesToNumberOfCoinsEditText();
         setListOfValueOfCoins();
+        setmMapOfIndexToCoinTextView();
 
-        setOnClickList();
 
-//        setButtonListeners();
+
+//        setOnClickList();
+
+
+
+        setButtonListeners();
 //
 
 //        List<EditText> listWithEditText = getListWithEditTexts();
@@ -97,11 +103,15 @@ public class CoinsFragment extends Fragment implements View.OnClickListener {
         {
             buttonName = "decrementButton";
         }
-        double totalValueUpdate;
+        double totalValueUpdate = 0;
         switch (buttonName) {
             case "incrementButton":
                 Toast.makeText(getContext(),func,Toast.LENGTH_SHORT).show();
+                System.out.println("totalValueUpdate BEFORE update!!!\n" + String.valueOf(totalValueUpdate));
+                Log.d(TAG,String.valueOf(totalValueUpdate));
                 totalValueUpdate = Double.valueOf(df.format(updateTotalValue(v,numberCoins1)));
+                System.out.println("totalValueUpdate AFTER update!!!\n" + String.valueOf(totalValueUpdate));
+                Log.d(TAG,String.valueOf(totalValueUpdate));
                 totalValueTextView.setText(String.valueOf(totalValueUpdate));
                 break;
             case "decrementButton":
@@ -121,40 +131,58 @@ public class CoinsFragment extends Fragment implements View.OnClickListener {
     }
 
 
-    public double updateTotalValue(View v, EditText editText)
+    public double updateTotalValue(View v, EditText numberOfCoinsEditText)
     {
 
         String idAsString,nameTypeOfButton,numberOfCoins;
-        int totalNumberOfCoinsBefore;
+
 
         idAsString = v.getResources().getResourceEntryName(v.getId());
         nameTypeOfButton = idAsString.substring(0,3);//"inc" or "dec" of increment and decrement
-        numberOfCoins = editText.getText().toString();
-
+        numberOfCoins = numberOfCoinsEditText.getText().toString();
+        System.out.println("NUMBER OF COINS: " + numberOfCoins);
         //index--;
+        //guarda o valor das moedas antes de o alterar
+        int totalNumberOfCoinsBefore;
 
-        if(numberOfCoins.equalsIgnoreCase(""))
+        if(numberOfCoins.equalsIgnoreCase(" "))
         {
             totalNumberOfCoinsBefore = 0;
+            System.out.println("TOTAL NUMBER OF COINS BEFORE: " + totalNumberOfCoinsBefore);
         }
         else
         {
             totalNumberOfCoinsBefore = Integer.valueOf(numberOfCoins);
+            System.out.println("TOTAL NUMBER OF COINS BEFORE: " + totalNumberOfCoinsBefore);
         }
 
+        //e agora muda o campo e actualiza o valor de acordo com o botao
+        int totalNumberOfCoinsAfter = 0;
         if(nameTypeOfButton.equalsIgnoreCase("inc")) {
-            editText.setText(String.valueOf((int) addCoin(editText)));
+            System.out.println("INCREMENT");
+            totalNumberOfCoinsAfter = (int) addCoinToEditText(numberOfCoinsEditText);
+            numberOfCoinsEditText.setText(String.valueOf(totalNumberOfCoinsAfter));
         }
         if(nameTypeOfButton.equalsIgnoreCase("dec"))
         {
-            editText.setText(String.valueOf((int) takeCoin(editText)));
+            System.out.println("DECREMENT");
+            totalNumberOfCoinsAfter = (int) takeCoinFromEditText(numberOfCoinsEditText);
+            numberOfCoinsEditText.setText(String.valueOf(totalNumberOfCoinsAfter));
         }
 
-        int totalNumberOfCoinsAfter = Integer.valueOf(numberOfCoins);
+        //parte final do update
 
-        int diff = totalNumberOfCoinsAfter - totalNumberOfCoinsBefore;
+        System.out.println("TOTAL NUMBER OF COINS AFTER: " + totalNumberOfCoinsAfter);
+
+        int diff =
+                totalNumberOfCoinsAfter - totalNumberOfCoinsBefore;
+        System.out.println("DIFF: " + diff);
+
+        System.out.println(String.format("ViewID: " + v.getId()));
         int correspondingValueIndex = getCorrespondingEditTextValueIndex(v);
-        double diffOfValue = diff * l_values.get(correspondingValueIndex);
+        System.out.println("CORRESPONDING INDEX:  " + correspondingValueIndex);
+        int index = getMapOfEditTextIndex().get(numberOfCoinsEditText);
+        double diffOfValue = diff * l_values.get(index);
         double totalValueBefore = Double.valueOf(totalValueTextView.getText().toString());
         double totalValueUpdate = totalValueBefore + diffOfValue;
 
@@ -196,9 +224,17 @@ public class CoinsFragment extends Fragment implements View.OnClickListener {
     }
 
 
-    private void updateToTotalTextField(Double totalValueToUpdate)
+    private SimpleArrayMap<EditText,Integer> getMapOfEditTextIndex()
     {
+        SimpleArrayMap<EditText,Integer> mapOfEditTextIndex = new SimpleArrayMap<>();
+        int i = 0;
+        for(EditText t : getListWithEditTexts())
+        {
+            mapOfEditTextIndex.put(t,i);
+            i++;
+        }
 
+        return mapOfEditTextIndex;
     }
 
 
@@ -230,11 +266,7 @@ public class CoinsFragment extends Fragment implements View.OnClickListener {
 
 
 
-    private void setListOfValueOfCoins()
-    {
-        l_values = Arrays.asList(VALUE_COIN_1,VALUE_COIN_2,VALUE_COIN_3,VALUE_COIN_4,VALUE_COIN_5,VALUE_COIN_6,VALUE_COIN_7,VALUE_COIN_8);
 
-    }
 
 
     private List<EditText> getListWithEditTexts()
@@ -254,14 +286,10 @@ public class CoinsFragment extends Fragment implements View.OnClickListener {
     }
 
 
-
-    //back to this later, just to generalize a method to set the listeners
-
-
-    public int getCorrespondingEditTextValueIndex(View v) {
+    public int getCorrespondingEditTextValueIndex(View view) {
         int index = 0;
 
-        switch (v.getId()) {
+        switch (view.getId()) {
             case R.id.coinText1:
                 index = 0;
                 break;
@@ -429,7 +457,8 @@ public class CoinsFragment extends Fragment implements View.OnClickListener {
         resetButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                setComponents();
+
+                setDefaultValuesToNumberOfCoinsEditText();
             }
         });
 
@@ -449,22 +478,72 @@ public class CoinsFragment extends Fragment implements View.OnClickListener {
             }
         });
 
-        statsButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-//                Intent intent = new Intent(MainActivity.this,StatsActivity.class);
-                ArrayList<Integer> l_absoluteValues = setListWithAbsoluteFrequencyOfCoins(getListWithEditTexts());
-                System.out.println("LIST WITH ABSOLUTE FREQUENCY VALUES:");
-                System.out.println(getListWithAbsoluteFrequencyOfCoins());
-//                intent.putIntegerArrayListExtra("numberOfCoins",l_absoluteValues);
-//                startActivity(intent);
-            }
-        });
+    }
 
 
+    //this method is buggy
+    //este metodo talvez devesse ser void apenas para alterar o valor do total
+    // e depois arranjar outro metodo para devolver
+    public double addCoinToEditText(EditText numberOfCoinsEditText){
+        double total;
+        String numberOfCoinsText = numberOfCoinsEditText.getText().toString();
+        System.out.println("NUMBER OF COINS TEXT:" + numberOfCoinsText);
+
+        //se nao tiver nada para nao dar null tem que ficar a zero
+        //ou entao fazer catch do NullPointerException
+        if(numberOfCoinsText.equalsIgnoreCase(""))
+        {
+            numberOfCoinsEditText.setText(DEFAULT_VALUE);//total = 0
+            total = Integer.valueOf(numberOfCoinsText);
+        }
+        else
+        {
+            total = Integer.valueOf(numberOfCoinsText);
+            total++;
+        }
+
+        return total;
+    }
+
+    public double takeCoinFromEditText(EditText editText){
+        double total;
+        String numberOfCoins;
+
+        numberOfCoins = editText.getText().toString();
+
+        total = Integer.valueOf(numberOfCoins);
+        total--;
+
+        if(total < 0 )
+        {
+            total = 0;
+        }
+        return total;
+    }
+
+
+    private ArrayList<Integer> setListWithAbsoluteFrequencyOfCoins(List<EditText> list)
+    {
+        ArrayList<Integer> l_absoluteFr = new ArrayList<>();
+        for(EditText e: list)
+        {
+            int totalCoin = Integer.parseInt(e.getText().toString());
+            l_absoluteFr.add(totalCoin);
+        }
+        return l_absoluteFr;
+    }
+
+    private ArrayList<Integer> getListWithAbsoluteFrequencyOfCoins()
+    {
+        return l_absoluteFr;
+    }
+
+    private void setListOfValueOfCoins()
+    {
+        l_values = Arrays.asList(VALUE_COIN_1,VALUE_COIN_2,VALUE_COIN_3,VALUE_COIN_4,VALUE_COIN_5,VALUE_COIN_6,VALUE_COIN_7,VALUE_COIN_8);
 
     }
-    private void initComponents(View view)
+    private void initWidgetComponents(View view)
     {
         //initialize EditTexts
         numberCoins1 = (EditText) view.findViewById(R.id.coinText1);
@@ -500,25 +579,9 @@ public class CoinsFragment extends Fragment implements View.OnClickListener {
         totalValueTextView = (TextView) view.findViewById(R.id.totalTextView);
 
         //options buttons
-
         resetButton = (Button) view.findViewById(R.id.resetButton);
         saveButton = (Button) view.findViewById(R.id.saveButton);
         loadButton = (Button) view.findViewById(R.id.loadButton);
-        statsButton = (Button) view.findViewById(R.id.statsButton);
-
-
-    }
-
-    private void setComponents()
-    {
-        EditText editText;
-        for(int i = 0; i< getListWithEditTexts().size(); i++)
-        {
-            editText = getListWithEditTexts().get(i);
-            editText.setText(DEFAULT_VALUE);
-        }
-
-
     }
 
     public ArrayList<String> getListOfEditTextAsString()
@@ -536,65 +599,26 @@ public class CoinsFragment extends Fragment implements View.OnClickListener {
 
     }
 
-
-
-
-    //this method is buggy
-    //este metodo talvez devesse ser void apenas para alterar o valor do total
-    // e depois arranjar outro metodo para devolver
-    public double addCoin(EditText editText){
-        double total;
-        String numberOfCoinsText = editText.getText().toString();
-
-        //se nao tiver nada para nao dar null tem que ficar a zero
-        //ou entao fazer catch do NullPointerException
-        if(numberOfCoinsText.equalsIgnoreCase(""))
+    private void setDefaultValuesToNumberOfCoinsEditText()
+    {
+        EditText editText;
+        for(int i = 0; i< getListWithEditTexts().size(); i++)
         {
-            //total = 0;
+            editText = getListWithEditTexts().get(i);
             editText.setText(DEFAULT_VALUE);
-            total = Integer.valueOf(numberOfCoinsText);
-        }
-        else
-        {
-            total = Integer.valueOf(numberOfCoinsText);
-            total++;
         }
 
-        return total;
+
     }
-
-    public double takeCoin(EditText editText){
-        double total;
-        String numberOfCoins;
-
-        numberOfCoins = editText.getText().toString();
-
-        total = Integer.valueOf(numberOfCoins);
-        total--;
-
-        if(total < 0 )
-        {
-            total = 0;
-        }
-
-        return total;
-    }
-
-
-    private ArrayList<Integer> setListWithAbsoluteFrequencyOfCoins(List<EditText> list)
+    private void setmMapOfIndexToCoinTextView()
     {
-        ArrayList<Integer> l_absoluteFr = new ArrayList<>();
-        for(EditText e: list)
+        int i = 1;
+        for(EditText editText : getListWithEditTexts())
         {
-            int totalCoin = Integer.parseInt(e.getText().toString());
-            l_absoluteFr.add(totalCoin);
+            mMapOfIndexToCoinTextView.put(editText.getId(),i);
+            i++;
         }
-        return l_absoluteFr;
-    }
 
-    private ArrayList<Integer> getListWithAbsoluteFrequencyOfCoins()
-    {
-        return l_absoluteFr;
     }
 
 
