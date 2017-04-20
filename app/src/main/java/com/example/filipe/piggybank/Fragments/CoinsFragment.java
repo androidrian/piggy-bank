@@ -21,7 +21,6 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 
 public class CoinsFragment extends Fragment implements View.OnClickListener {
 
@@ -121,7 +120,7 @@ public class CoinsFragment extends Fragment implements View.OnClickListener {
 //        totalValueTextView.setText(String.valueOf(totalValueUpdate));
     }
 
-    
+
     public double updateTotalValue(View v, EditText editText)
     {
 
@@ -438,7 +437,7 @@ public class CoinsFragment extends Fragment implements View.OnClickListener {
             @Override
             public void onClick(View v) {
                 Services services = new Services(fileName);
-                services.loadFromFile(getListWithEditTexts());
+                services.loadValuesFromFile(getListWithEditTexts());
             }
         });
 

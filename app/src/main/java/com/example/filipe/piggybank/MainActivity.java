@@ -19,6 +19,8 @@ import com.example.filipe.piggybank.Fragments.NotesFragment;
 import com.example.filipe.piggybank.Fragments.StatsFragment;
 import com.example.filipe.piggybank.Fragments.TotalFragment;
 
+import net.danlew.android.joda.JodaTimeAndroid;
+
 
 public class MainActivity extends AppCompatActivity{
 
@@ -32,9 +34,9 @@ public class MainActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         //joda-time initialization
-//        JodaTimeAndroid.init(this);
+        JodaTimeAndroid.init(this);
         Log.d(TAG,"onCreate: Starting.");
-       mSectionsPagerAdapter = new SectionsPageAdapter(getSupportFragmentManager());
+        mSectionsPagerAdapter = new SectionsPageAdapter(getSupportFragmentManager());
         viewPager = (ViewPager) findViewById(R.id.container);
         setupViewPager(viewPager);
 
