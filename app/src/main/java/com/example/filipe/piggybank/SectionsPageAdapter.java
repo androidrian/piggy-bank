@@ -1,4 +1,4 @@
-package com.example.filipe.piggybank.Fragments;
+package com.example.filipe.piggybank;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;

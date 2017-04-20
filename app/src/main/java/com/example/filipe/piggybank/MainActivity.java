@@ -16,7 +16,6 @@ import android.util.Log;
 import com.example.filipe.piggybank.Fragments.CoinsFragment;
 import com.example.filipe.piggybank.Fragments.NotesFragment;
 
-import com.example.filipe.piggybank.Fragments.SectionsPageAdapter;
 import com.example.filipe.piggybank.Fragments.StatsFragment;
 
 
@@ -40,6 +39,11 @@ public class MainActivity extends AppCompatActivity{
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
+
+        if (shouldAskPermissions()) {
+            askPermissions();
+        }
+
 
 
 
@@ -73,11 +77,6 @@ public class MainActivity extends AppCompatActivity{
         int requestCode = 200;
         requestPermissions(permissions, requestCode);
     }
-
-
-
-
-
 
 
 
