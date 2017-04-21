@@ -16,7 +16,7 @@ public class Calculations {
 
     private String DEFAULT_VALUE = "0";
 
-    DecimalFormat df = new DecimalFormat("#.000");
+    DecimalFormat df = new DecimalFormat("#.00");
 
     public Calculations()
     {
@@ -123,8 +123,7 @@ public class Calculations {
         return totalValueUpdate;
     }
 
-    //this method is buggy
-    //este metodo talvez devesse ser void apenas para alterar o valor do total e depois arranjar outro metodo para devolver
+
     private void addCoin(EditText coinInputField){
         double total;
         String numberOfCoinsText = coinInputField.getText().toString();
@@ -148,7 +147,6 @@ public class Calculations {
 
     }
 
-    //este método tb deveria talvez ser void...convém depois ver o que se passa
     private void takeCoin(EditText coinInputField){
         double total;
         String numberOfCoins;
@@ -166,67 +164,11 @@ public class Calculations {
     }
 
 
-    /**
-     * Iterates trough a list with the total number of each coin
-     * and stores its sum in a variable to return the total number of coins in the piggy bank
-     * @param l_totalNumberOfEachCoin the list that has the total number of coins of each coin
-     * @return the sum of all coins
-     */
-    private int getTotalNumberOfCoinsInPiggyBank(List<Integer> l_totalNumberOfEachCoin)
-    {
-        int totalNumberOfAllCoins = 0;
-        for(Integer totalNumberOfCoin : l_totalNumberOfEachCoin)
-        {
-            totalNumberOfAllCoins += totalNumberOfCoin;
-        }
-        return totalNumberOfAllCoins;
-    }
 
-    /**
-     * Calculate the relative frequency = (Absolute Frequency/Total)
-     * of the number of coins that exists in the piggy bank
-     * @param l_absoluteValues the list the absolute frequency values of each coin
-     * @return the list with relative frequency of each coin
-     */
-    public ArrayList<Double> getListWithRelativeFrequencyOfCoins(List<Integer> l_absoluteValues)
-    {
-        ArrayList<Double> l_rFrequencyOfCoins = new ArrayList<>();
-        int totalCoinsInPiggyBank =
-                getTotalNumberOfCoinsInPiggyBank(l_absoluteValues);
 
-        for(Integer absoluteValue : l_absoluteValues) {
 
-           double rFrequencyOfCoin;
-           if (totalCoinsInPiggyBank != 0){//can't divide by 0
-                double value =
-                        (double)absoluteValue/totalCoinsInPiggyBank;
-               rFrequencyOfCoin = Double.valueOf(df.format(value));
-               l_rFrequencyOfCoins.add(rFrequencyOfCoin);
-           }else{
-               rFrequencyOfCoin = 0;
-               l_rFrequencyOfCoins.add(rFrequencyOfCoin);
-           }
-        }
-        return l_rFrequencyOfCoins;
-    }
 
-    /**
-     * Sets a list with percentage values using the list with the frequency values and
-     * multiplying each value for 100.
-     * @param l_frequencyValues the list with the frequency values
-     * @return the list with the values in percentage (value * 100)
-     */
-    public ArrayList<Double> setListWithPercentageOfCoins(List<Double> l_frequencyValues)
-    {
-        ArrayList<Double> l_coinPercentage = new ArrayList<>();
 
-        for(Double frValue: l_frequencyValues)
-        {
-            double valueInPercentage = Double.valueOf(df.format(frValue * 100));
-            l_coinPercentage.add(valueInPercentage);
-        }
-        return l_coinPercentage;
-    }
 
 
 }

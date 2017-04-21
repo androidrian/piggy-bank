@@ -112,11 +112,7 @@ public class CoinsFragment extends Fragment implements View.OnClickListener {
         switch (buttonName) {
             case "incrementButton":
                 Toast.makeText(getContext(),func,Toast.LENGTH_SHORT).show();
-                System.out.println("totalValueUpdate BEFORE update!!!\n" + String.valueOf(totalValueUpdate));
-                Log.d(TAG,String.valueOf(totalValueUpdate));
                 totalValueUpdate = Double.valueOf(df.format(updateTotalValue(v,numberCoins1)));
-                System.out.println("totalValueUpdate AFTER update!!!\n" + String.valueOf(totalValueUpdate));
-                Log.d(TAG,String.valueOf(totalValueUpdate));
                 totalValueTextView.setText(String.valueOf(totalValueUpdate));
                 break;
             case "decrementButton":
@@ -134,6 +130,7 @@ public class CoinsFragment extends Fragment implements View.OnClickListener {
 //        totalValueUpdate = Double.valueOf(df.format(updateTotalValue(v,numberCoins1)));
 //        totalValueTextView.setText(String.valueOf(totalValueUpdate));
     }
+
 
 
     public double updateTotalValue(View v, EditText numberOfCoinsEditText)
@@ -290,52 +287,11 @@ public class CoinsFragment extends Fragment implements View.OnClickListener {
     }
 
 
-    public int getCorrespondingEditTextValueIndex(View view) {
-        int index = 0;
-
-        switch (view.getId()) {
-            case R.id.coinText1:
-                index = 0;
-                break;
-
-            case R.id.coinText2:
-                index = 1;
-                break;
-
-            case R.id.coinText3:
-                index = 2;
-                break;
-
-            case R.id.coinText4:
-                index = 3;
-                break;
-
-            case R.id.coinText5:
-                index = 4;
-                break;
-
-            case R.id.coinText6:
-                index = 5;
-                break;
-
-            case R.id.coinText7:
-                index = 6;
-                break;
-
-            case R.id.coinText8:
-                index = 7;
-                break;
-        }
-        return index;
-    }
-
     private void setButtonListeners()
     {
-
         incButtonCoin1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 double totalValueUpdate;
                 totalValueUpdate = Double.valueOf(df.format(updateTotalValue(v,numberCoins1)));
                 totalValueTextView.setText(String.valueOf(totalValueUpdate));

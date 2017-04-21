@@ -9,10 +9,13 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.filipe.piggybank.Model.Stats;
 import com.example.filipe.piggybank.R;
 import com.example.filipe.piggybank.Model.Calculations;
+import com.example.filipe.piggybank.Utils.Services;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class StatsFragment extends Fragment {
@@ -32,14 +35,19 @@ public class StatsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_stats_layout, container, false);  l_coinsAbsoluteFrequency = new ArrayList<>();
+        View view = inflater.inflate(R.layout.fragment_stats_layout, container, false);
+        l_coinsAbsoluteFrequency = new ArrayList<>();
         Log.d(TAG,"onCreateView: Starting...");
 
         initComponents(view);
-        setCoinPercentageValues();
 
 
+        Services services = new Services();
 
+        List<Integer> listNumberOfCoins = services.getListNumberOfCoinsInBank();
+
+        Stats stats = new Stats();
+        setCoinPercentageValues(listNumberOfCoins);
 
         return view;
     }
@@ -93,14 +101,13 @@ public class StatsFragment extends Fragment {
 
     }
 
-    private void setCoinPercentageValues()
+    private void setCoinPercentageValues(List<Integer> listNumberOfCoins)
     {
-        Calculations calc = new Calculations();
-
-        ArrayList<Double> l_relativeFr = calc.getListWithRelativeFrequencyOfCoins(l_coinsAbsoluteFrequency);
+        Stats stats = new Stats();
+        ArrayList<Double> l_relativeFr = stats.getListWithRelativeFrequencyOfCoins(listNumberOfCoins);
         System.out.println("RELATIVE FREQUENCY LIST");
         System.out.println(l_relativeFr);
-        ArrayList<Double> l_percentage  = calc.setListWithPercentageOfCoins(l_relativeFr);
+        ArrayList<Double> l_percentage  = stats.setListWithPercentageOfCoins(l_relativeFr);
         System.out.println("PERCENTAGE LIST");
         System.out.println(l_percentage);
 
@@ -119,4 +126,6 @@ public class StatsFragment extends Fragment {
 
         }
     }
+
+
 }

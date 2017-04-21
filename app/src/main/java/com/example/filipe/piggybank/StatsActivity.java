@@ -28,7 +28,7 @@ public class StatsActivity extends AppCompatActivity {
         System.out.println("LIST PASSED AS INTENT OF ABSOLUTE VALUES");
         System.out.println(l_coinsAbsoluteFrequency);
         initComponents();
-        setCoinPercentageValues();
+
 
     }
 
@@ -74,30 +74,5 @@ public class StatsActivity extends AppCompatActivity {
 
     }
 
-    private void setCoinPercentageValues()
-    {
-        Calculations calc = new Calculations();
 
-        ArrayList<Double> l_relativeFr = calc.getListWithRelativeFrequencyOfCoins(l_coinsAbsoluteFrequency);
-        System.out.println("RELATIVE FREQUENCY LIST");
-        System.out.println(l_relativeFr);
-        ArrayList<Double> l_percentage  = calc.setListWithPercentageOfCoins(l_relativeFr);
-        System.out.println("PERCENTAGE LIST");
-        System.out.println(l_percentage);
-
-        if(!l_percentage.isEmpty()) {
-            TextView textView;
-            String string;
-            for(int i = 0; i < l_percentageTextView.size(); i++)
-            {
-                textView = l_percentageTextView.get(i);
-                string = String.valueOf(l_percentage.get(i));
-                textView.setText(string);
-            }
-
-        } else {
-            System.out.println("EMPTY LIST");
-            Toast.makeText(this,"LIST IS EMPTY!",Toast.LENGTH_LONG).show();
-        }
-    }
 }

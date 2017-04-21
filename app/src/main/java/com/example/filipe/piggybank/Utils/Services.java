@@ -140,6 +140,18 @@ public class Services {
         return file;
     }
 
+    public List<Integer> getListNumberOfCoinsInBank()
+    {
+        String[] data = readDataFromFile();
+        List<Integer> listNumberOfCoins = new ArrayList<>();
+       for(int i = 0; i < data.length-1; i++) {
+           int value = Integer.parseInt(data[i]);
+           listNumberOfCoins.add(value);
+       }
+
+        return listNumberOfCoins;
+    }
+
 
 }
 

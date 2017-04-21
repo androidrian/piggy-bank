@@ -1,35 +1,25 @@
 package com.example.filipe.piggybank.Controller;
 
 import android.annotation.TargetApi;
-
 import android.os.Build;
-
 import android.support.design.widget.TabLayout;
-
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-
 import android.util.Log;
-
-
 import com.example.filipe.piggybank.Fragments.CoinsFragment;
 import com.example.filipe.piggybank.Fragments.NotesFragment;
-
 import com.example.filipe.piggybank.Fragments.SectionsPageAdapter;
 import com.example.filipe.piggybank.Fragments.StatsFragment;
 import com.example.filipe.piggybank.Fragments.TotalFragment;
 import com.example.filipe.piggybank.R;
-
 import net.danlew.android.joda.JodaTimeAndroid;
-
 
 public class MainActivity extends AppCompatActivity{
 
     private static final String TAG = "MainActivity";
     private SectionsPageAdapter mSectionsPagerAdapter;
     private ViewPager viewPager;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,13 +38,6 @@ public class MainActivity extends AppCompatActivity{
         if (shouldAskPermissions()) {
             askPermissions();
         }
-
-
-
-
-
-
-
     }
 
     public void setupViewPager(ViewPager viewPager)
@@ -66,8 +49,6 @@ public class MainActivity extends AppCompatActivity{
         adapter.addFragment(new StatsFragment(),"Stats");
         viewPager.setAdapter(adapter);
     }
-
-
 
 
     protected boolean shouldAskPermissions() {
@@ -83,7 +64,4 @@ public class MainActivity extends AppCompatActivity{
         int requestCode = 200;
         requestPermissions(permissions, requestCode);
     }
-
-
-
 }
