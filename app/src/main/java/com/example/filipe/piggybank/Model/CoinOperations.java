@@ -71,6 +71,45 @@ public class CoinOperations {
 
     }
 
+    public double takeCoinFromEditText(EditText editText){
+        double total;
+        String numberOfCoins;
+
+        numberOfCoins = editText.getText().toString();
+
+        total = Integer.valueOf(numberOfCoins);
+        total--;
+
+        if(total < 0 )
+        {
+            total = 0;
+        }
+        return total;
+    }
+
+    public double addCoinToEditText(EditText numberOfCoinsEditText){
+        double total;
+        String numberOfCoinsText = numberOfCoinsEditText.getText().toString();
+        System.out.println("NUMBER OF COINS TEXT:" + numberOfCoinsText);
+
+        //se nao tiver nada para nao dar null tem que ficar a zero
+        //ou entao fazer catch do NullPointerException
+        if(numberOfCoinsText.equalsIgnoreCase(""))
+        {
+            numberOfCoinsEditText.setText(DEFAULT_VALUE);//total = 0
+            total = Integer.valueOf(numberOfCoinsText);
+        }
+        else
+        {
+            total = Integer.valueOf(numberOfCoinsText);
+            total++;
+        }
+
+        return total;
+    }
+
+
+
 
 
 
