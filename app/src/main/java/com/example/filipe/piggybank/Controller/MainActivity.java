@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity{
         adapter.addFragment(new TotalFragment(),"Total");
         adapter.addFragment(new CoinsFragment(),"coins");
         adapter.addFragment(new NotesFragment(),"Notes");
-        adapter.addFragment(new StatsFragment(),"Stats");
+        adapter.addFragment(new StatsFragment(),"Statistics");
         viewPager.setAdapter(adapter);
     }
 

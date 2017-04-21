@@ -13,6 +13,9 @@ import com.example.filipe.piggybank.R;
 
 
 public class NotesFragment extends Fragment {
+
+    private static final String TAG = "NotesFragment";
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

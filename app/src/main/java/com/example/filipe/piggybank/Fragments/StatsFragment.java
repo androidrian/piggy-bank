@@ -6,14 +6,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.TextView;
-
-import com.example.filipe.piggybank.Model.Stats;
+import com.example.filipe.piggybank.Model.StatsOperations;
 import com.example.filipe.piggybank.R;
-import com.example.filipe.piggybank.Model.Calculations;
-import com.example.filipe.piggybank.Utils.Services;
-
+import com.example.filipe.piggybank.Services.FileUtils;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,7 +24,6 @@ public class StatsFragment extends Fragment {
     private ArrayList<TextView> l_coinsTextView;
     private ArrayList<TextView> l_percentageTextView;
 
-    private Button btn;
 
 
     @Override
@@ -42,11 +37,11 @@ public class StatsFragment extends Fragment {
         initComponents(view);
 
 
-        Services services = new Services();
+        FileUtils services = new FileUtils();
 
         List<Integer> listNumberOfCoins = services.getListNumberOfCoinsInBank();
 
-        Stats stats = new Stats();
+        StatsOperations stats = new StatsOperations();
         setCoinPercentageValues(listNumberOfCoins);
 
         return view;
@@ -103,21 +98,17 @@ public class StatsFragment extends Fragment {
 
     private void setCoinPercentageValues(List<Integer> listNumberOfCoins)
     {
-        Stats stats = new Stats();
-        ArrayList<Double> l_relativeFr = stats.getListWithRelativeFrequencyOfCoins(listNumberOfCoins);
-        System.out.println("RELATIVE FREQUENCY LIST");
-        System.out.println(l_relativeFr);
-        ArrayList<Double> l_percentage  = stats.setListWithPercentageOfCoins(l_relativeFr);
-        System.out.println("PERCENTAGE LIST");
-        System.out.println(l_percentage);
+        StatsOperations stats = new StatsOperations();
+        ArrayList<Double> listRelativeFr = stats.getListWithRelativeFrequencyOfCoins(listNumberOfCoins);
+        ArrayList<Double> listWithPercenteValues  = stats.setListWithPercentageOfCoins(listRelativeFr);
 
-        if(!l_percentage.isEmpty()) {
+        if(!listWithPercenteValues.isEmpty()) {
             TextView textView;
             String string;
             for(int i = 0; i < l_percentageTextView.size(); i++)
             {
                 textView = l_percentageTextView.get(i);
-                string = String.valueOf(l_percentage.get(i));
+                string = String.valueOf(listWithPercenteValues.get(i));
                 textView.setText(string);
             }
 

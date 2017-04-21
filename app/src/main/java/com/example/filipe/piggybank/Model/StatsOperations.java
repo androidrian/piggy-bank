@@ -10,12 +10,12 @@ import java.util.List;
  * Created by Filipe on 21/04/2017.
  */
 
-public class Stats {
+public class StatsOperations {
 
     DecimalFormat df = new DecimalFormat("#.00");
 
 
-    public Stats()
+    public StatsOperations()
     {
 
     }

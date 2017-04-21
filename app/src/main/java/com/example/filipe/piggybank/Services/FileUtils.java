@@ -1,4 +1,4 @@
-package com.example.filipe.piggybank.Utils;
+package com.example.filipe.piggybank.Services;
 
 import android.content.Context;
 import android.os.Environment;
@@ -19,19 +19,19 @@ import java.util.Scanner;
  * Created by Filipe on 11/02/2017.
  */
 
-public class Services {
+public class FileUtils {
 
     private String fileName = "teste.txt";
     private File root = Environment.getExternalStorageDirectory();
     private File dir = new File(root.getAbsolutePath() + "/piggybank");
     private File file = new File(dir,fileName);
 
-   public Services()
+   public FileUtils()
    {
 
    }
 
-   public Services(String string)
+   public FileUtils(String string)
    {
 
        this.fileName = string;

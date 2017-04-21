@@ -8,18 +8,15 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.filipe.piggybank.R;
-import com.example.filipe.piggybank.Utils.Services;
+import com.example.filipe.piggybank.Services.FileUtils;
 
 
 public class TotalFragment extends Fragment {
-
 
     public final String TAG = "TotalFragment";
 
     private TextView mTotalIntegerPartTextView;
     private TextView mTotalDecimalPartTextView;
-
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -29,8 +26,7 @@ public class TotalFragment extends Fragment {
         mTotalIntegerPartTextView = (TextView)view.findViewById(R.id.totalIntegerPartTextView);
         mTotalDecimalPartTextView = (TextView)view.findViewById(R.id.totalDecimalPartTextView);
 
-
-        Services services = new Services();
+        FileUtils services = new FileUtils();
         String[] data = services.readDataFromFile();
 
         int position = data.length-1;
@@ -42,12 +38,9 @@ public class TotalFragment extends Fragment {
 
         return view;
 
-
-
     }
-
-
-
+    //problem aqui...se o inteiro tiver + que 1 digito
+    //back to this later
     private String getIntegerPart(String totalValue)
     {
         return totalValue.substring(0,1);

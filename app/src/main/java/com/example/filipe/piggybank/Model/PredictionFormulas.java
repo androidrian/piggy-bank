@@ -4,9 +4,9 @@ package com.example.filipe.piggybank.Model;
  * Created by Filipe on 18/04/2017.
  */
 
-public class Prediction {
+public class PredictionFormulas {
 
-    public Prediction()
+    public PredictionFormulas()
     {
 
     }

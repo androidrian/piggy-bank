@@ -2,10 +2,8 @@ package com.example.filipe.piggybank.Fragments;
 
 
 import android.os.Bundle;
-import android.os.Environment;
 import android.support.v4.app.Fragment;
 import android.support.v4.util.SimpleArrayMap;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,9 +13,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.filipe.piggybank.R;
-import com.example.filipe.piggybank.Utils.Services;
+import com.example.filipe.piggybank.Services.FileUtils;
 
-import java.io.File;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -25,9 +22,7 @@ import java.util.List;
 
 public class CoinsFragment extends Fragment implements View.OnClickListener {
 
-
     private static final String TAG = "CoinsFragment";
-
 
     final double VALUE_COIN_1 = 2.0;
     final double VALUE_COIN_2 = 1.0;
@@ -45,21 +40,14 @@ public class CoinsFragment extends Fragment implements View.OnClickListener {
     private Button decButtonCoin1,decButtonCoin2,decButtonCoin3,decButtonCoin4,decButtonCoin5,decButtonCoin6,decButtonCoin7,decButtonCoin8;
     private Button resetButton, loadButton, saveButton;
 
-    private List<Double> l_values = new ArrayList<>();
-    ArrayList<Integer> l_absoluteFr = new ArrayList<>();
-    private List<Button> listOfButtons = new ArrayList<>();
+    private List<Double> m_listOfValues = new ArrayList<>();
+    private List<Button> m_listOfButtons = new ArrayList<>();
 
-    private SimpleArrayMap<Integer,Integer> mMapOfIndexToCoinTextView = new SimpleArrayMap<>();
-    private SimpleArrayMap<EditText,Integer> mMapOfEditTextIndex = new SimpleArrayMap<>();
-    private SimpleArrayMap<Button,EditText> mMapOfButtonToEditText = new SimpleArrayMap<>();
+    private SimpleArrayMap<Integer,Integer> m_mapOfIndexToCoinTextView = new SimpleArrayMap<>();
+    private SimpleArrayMap<EditText,Integer> m_mapOfEditTextIndex = new SimpleArrayMap<>();
+    private SimpleArrayMap<Button,EditText> m_mapOfButtonToEditText = new SimpleArrayMap<>();
 
-
-    private String fileName = "piggyBankRecords.txt";
-    private File root = Environment.getExternalStorageDirectory();
-    private File dir = new File(root.getAbsolutePath() + "/piggybank");
-    private File file = new File(dir,fileName);
-
-    private DecimalFormat df = new DecimalFormat("#.00");
+    DecimalFormat df = new DecimalFormat("#.00");
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -86,7 +74,7 @@ public class CoinsFragment extends Fragment implements View.OnClickListener {
 //        List<EditText> listWithEditText = getListWithEditTexts();
 //        //setListOfDecrementButtons();
 //
-//        //Services reader = new Services();
+//        //FileUtils reader = new FileUtils();
 
 
 
@@ -118,6 +106,7 @@ public class CoinsFragment extends Fragment implements View.OnClickListener {
             case "decrementButton":
                 Toast.makeText(getContext(),func,Toast.LENGTH_SHORT).show();
                 totalValueUpdate = Double.valueOf(df.format(updateTotalValue(v,numberCoins1)));
+                totalValueTextView.setText(String.valueOf(totalValueUpdate));
                 break;
             case "null":
                 Toast.makeText(getContext(),func,Toast.LENGTH_SHORT).show();
@@ -126,11 +115,7 @@ public class CoinsFragment extends Fragment implements View.OnClickListener {
 
         }
 
-//        double totalValueUpdate;
-//        totalValueUpdate = Double.valueOf(df.format(updateTotalValue(v,numberCoins1)));
-//        totalValueTextView.setText(String.valueOf(totalValueUpdate));
     }
-
 
 
     public double updateTotalValue(View v, EditText numberOfCoinsEditText)
@@ -181,18 +166,9 @@ public class CoinsFragment extends Fragment implements View.OnClickListener {
         System.out.println("DIFF: " + diff);
 
         int correspondingValueIndex = getMapOfEditTextIndex().get(numberOfCoinsEditText);
-        double diffOfValue = diff * l_values.get(correspondingValueIndex);
+        double diffOfValue = diff * m_listOfValues.get(correspondingValueIndex);
         double totalValueBefore = Double.valueOf(totalValueTextView.getText().toString());
         double totalValueUpdate = totalValueBefore + diffOfValue;
-
-//        //Predition prototype BEGIN
-//        Prediction p = new Prediction();
-//        int day1 = 1;
-//        int day2 = 13;
-//        double totalPredictionValue = p.getTotalPreditionOnTargetDay(totalValueUpdate,day1,day2);
-//        String totalPrediction = String.valueOf(df.format(totalPredictionValue));
-//        predictionTextView.setText(totalPrediction);
-//        //Prototype END
 
         return totalValueUpdate;
     }
@@ -220,70 +196,6 @@ public class CoinsFragment extends Fragment implements View.OnClickListener {
 
 
 
-    }
-
-
-    private void setMapOfEditTextIndex()
-    {
-       int i = 0;
-        for(EditText t : getListWithEditTexts())
-        {
-            mMapOfEditTextIndex.put(t,i);
-            i++;
-        }
-
-    }
-
-    public SimpleArrayMap<EditText,Integer> getMapOfEditTextIndex()
-    {
-        return mMapOfEditTextIndex;
-    }
-
-
-    /**
-     * Convert a text in an EditText field to a string
-     * @param editText the number of coins
-     * @return a string with the representation of number of coins in editText
-     */
-    private String convertEditTextToString(EditText editText)
-    {
-        String s;
-        s = editText.getText().toString();
-
-        return s;
-    }
-
-    /**
-     * Returns the value of the total as a string
-     * @return the string representation of the Total var/value
-     */
-    private String getTotalAsString(TextView totalValue)
-    {
-        String string;
-        string = totalValue.getText().toString();
-
-        return string;
-    }
-
-
-
-
-
-
-    private List<EditText> getListWithEditTexts()
-    {
-        List<EditText> list =
-                Arrays.asList(numberCoins1,numberCoins2,numberCoins3,numberCoins4,
-                        numberCoins5,numberCoins6,numberCoins7,numberCoins8);
-        return list;
-    }
-
-    private List<Button> setListOfIncrementButtons()
-    {
-        List<Button> l_incButtons =
-                Arrays.asList(incButtonCoin1,incButtonCoin2,incButtonCoin3,incButtonCoin4,
-                        incButtonCoin4,incButtonCoin5,incButtonCoin6,incButtonCoin7,incButtonCoin8);
-        return l_incButtons;
     }
 
 
@@ -424,9 +336,9 @@ public class CoinsFragment extends Fragment implements View.OnClickListener {
         loadButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Services services = new Services(fileName);
-                services.loadValuesFromFile(getListWithEditTexts());
-                String[] data = services.readDataFromFile();
+                FileUtils fileService = new FileUtils();
+                fileService.loadValuesFromFile(getListWithEditTexts());
+                String[] data = fileService.readDataFromFile();
                 totalValueTextView.setText(data[data.length-1]);
             }
         });
@@ -434,17 +346,13 @@ public class CoinsFragment extends Fragment implements View.OnClickListener {
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Services service = new Services();
+                FileUtils service = new FileUtils();
                 service.writeToSD(getListOfEditTextAsString(),v.getContext(), totalValueTextView);
             }
         });
 
     }
 
-
-    //this method is buggy
-    //este metodo talvez devesse ser void apenas para alterar o valor do total
-    // e depois arranjar outro metodo para devolver
     public double addCoinToEditText(EditText numberOfCoinsEditText){
         double total;
         String numberOfCoinsText = numberOfCoinsEditText.getText().toString();
@@ -483,25 +391,9 @@ public class CoinsFragment extends Fragment implements View.OnClickListener {
     }
 
 
-    private ArrayList<Integer> setListWithAbsoluteFrequencyOfCoins(List<EditText> list)
-    {
-        ArrayList<Integer> l_absoluteFr = new ArrayList<>();
-        for(EditText e: list)
-        {
-            int totalCoin = Integer.parseInt(e.getText().toString());
-            l_absoluteFr.add(totalCoin);
-        }
-        return l_absoluteFr;
-    }
-
-    private ArrayList<Integer> getListWithAbsoluteFrequencyOfCoins()
-    {
-        return l_absoluteFr;
-    }
-
     private void setListOfValueOfCoins()
     {
-        l_values = Arrays.asList(VALUE_COIN_1,VALUE_COIN_2,VALUE_COIN_3,VALUE_COIN_4,VALUE_COIN_5,VALUE_COIN_6,VALUE_COIN_7,VALUE_COIN_8);
+        m_listOfValues = Arrays.asList(VALUE_COIN_1,VALUE_COIN_2,VALUE_COIN_3,VALUE_COIN_4,VALUE_COIN_5,VALUE_COIN_6,VALUE_COIN_7,VALUE_COIN_8);
 
     }
     private void initWidgetComponents(View view)
@@ -566,7 +458,7 @@ public class CoinsFragment extends Fragment implements View.OnClickListener {
         int limit = getListWithEditTexts().size();
         for(Button b : getListWithButtons())
         {
-            mMapOfButtonToEditText.put(b,getListWithEditTexts().get(i));
+            m_mapOfButtonToEditText.put(b,getListWithEditTexts().get(i));
             i++;
             if(i == limit)
             {
@@ -576,14 +468,14 @@ public class CoinsFragment extends Fragment implements View.OnClickListener {
     }
     private void setListOfButtons()
     {
-        listOfButtons = Arrays.asList(incButtonCoin1,incButtonCoin2,incButtonCoin3,incButtonCoin4,incButtonCoin5,
+        m_listOfButtons = Arrays.asList(incButtonCoin1,incButtonCoin2,incButtonCoin3,incButtonCoin4,incButtonCoin5,
                 incButtonCoin6,incButtonCoin7,incButtonCoin8,decButtonCoin1,decButtonCoin2,decButtonCoin3,decButtonCoin4,decButtonCoin5,
                 decButtonCoin6,decButtonCoin7,decButtonCoin8);
     }
 
     private List<Button> getListWithButtons()
     {
-        return listOfButtons;
+        return m_listOfButtons;
     }
 
     private void setDefaultValuesToNumberOfCoinsEditText()
@@ -608,12 +500,43 @@ public class CoinsFragment extends Fragment implements View.OnClickListener {
         int i = 1;
         for(EditText editText : getListWithEditTexts())
         {
-            mMapOfIndexToCoinTextView.put(editText.getId(),i);
+            m_mapOfIndexToCoinTextView.put(editText.getId(),i);
             i++;
         }
 
     }
 
+    private void setMapOfEditTextIndex()
+    {
+        int i = 0;
+        for(EditText t : getListWithEditTexts())
+        {
+            m_mapOfEditTextIndex.put(t,i);
+            i++;
+        }
+
+    }
+
+    public SimpleArrayMap<EditText,Integer> getMapOfEditTextIndex()
+    {
+        return m_mapOfEditTextIndex;
+    }
+
+    private List<EditText> getListWithEditTexts()
+    {
+        List<EditText> list =
+                Arrays.asList(numberCoins1,numberCoins2,numberCoins3,numberCoins4,
+                        numberCoins5,numberCoins6,numberCoins7,numberCoins8);
+        return list;
+    }
+
+    private List<Button> setListOfIncrementButtons()
+    {
+        List<Button> l_incButtons =
+                Arrays.asList(incButtonCoin1,incButtonCoin2,incButtonCoin3,incButtonCoin4,
+                        incButtonCoin4,incButtonCoin5,incButtonCoin6,incButtonCoin7,incButtonCoin8);
+        return l_incButtons;
+    }
 
 
 }
