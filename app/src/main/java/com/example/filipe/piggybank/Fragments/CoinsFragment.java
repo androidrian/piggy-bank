@@ -42,7 +42,6 @@ public class CoinsFragment extends Fragment implements View.OnClickListener {
 
     private List<Double> m_listOfValues = new ArrayList<>();
     private List<Button> m_listOfButtons = new ArrayList<>();
-
     private SimpleArrayMap<Integer,Integer> m_mapOfIndexToCoinTextView = new SimpleArrayMap<>();
     private SimpleArrayMap<EditText,Integer> m_mapOfEditTextIndex = new SimpleArrayMap<>();
     private SimpleArrayMap<Button,EditText> m_mapOfButtonToEditText = new SimpleArrayMap<>();
@@ -54,6 +53,7 @@ public class CoinsFragment extends Fragment implements View.OnClickListener {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_coins_layout, container, false);
+
         initWidgetComponents(view);
         setDefaultValuesToNumberOfCoinsEditText();
         setListOfValueOfCoins();
