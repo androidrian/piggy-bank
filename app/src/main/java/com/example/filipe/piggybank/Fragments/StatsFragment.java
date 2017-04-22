@@ -20,7 +20,6 @@ public class StatsFragment extends Fragment {
 
     private TextView coin1,coin2,coin3,coin4,coin5,coin6,coin7,coin8;
     private TextView coinPerc1,coinPerc2,coinPerc3,coinPerc4,coinPerc5,coinPerc6,coinPerc7,coinPerc8;
-    private ArrayList<Integer> l_coinsAbsoluteFrequency;
     private ArrayList<TextView> l_coinsTextView;
     private ArrayList<TextView> l_percentageTextView;
 
@@ -31,7 +30,6 @@ public class StatsFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_stats_layout, container, false);
-        l_coinsAbsoluteFrequency = new ArrayList<>();
         Log.d(TAG,"onCreateView: Starting...");
 
         initComponents(view);
@@ -39,7 +37,7 @@ public class StatsFragment extends Fragment {
 
         FileUtils services = new FileUtils();
 
-        List<Integer> listNumberOfCoins = services.getListNumberOfCoinsInBank();
+        List<Integer> listNumberOfCoins = services.getListWithNumberOfCoinsInBank();
 
         StatsOperations stats = new StatsOperations();
         setCoinPercentageValues(listNumberOfCoins);
@@ -100,15 +98,15 @@ public class StatsFragment extends Fragment {
     {
         StatsOperations stats = new StatsOperations();
         ArrayList<Double> listRelativeFr = stats.getListWithRelativeFrequencyOfCoins(listNumberOfCoins);
-        ArrayList<Double> listWithPercenteValues  = stats.setListWithPercentageOfCoins(listRelativeFr);
+        ArrayList<Double> listWithPercentageValues  = stats.setListWithPercentageOfCoins(listRelativeFr);
 
-        if(!listWithPercenteValues.isEmpty()) {
+        if(!listWithPercentageValues.isEmpty()) {
             TextView textView;
             String string;
             for(int i = 0; i < l_percentageTextView.size(); i++)
             {
                 textView = l_percentageTextView.get(i);
-                string = String.valueOf(listWithPercenteValues.get(i));
+                string = String.valueOf(listWithPercentageValues.get(i));
                 textView.setText(string);
             }
 

@@ -140,7 +140,7 @@ public class FileUtils {
         return file;
     }
 
-    public List<Integer> getListNumberOfCoinsInBank()
+    public List<Integer> getListWithNumberOfCoinsInBank()
     {
         String[] data = readDataFromFile();
         List<Integer> listNumberOfCoins = new ArrayList<>();

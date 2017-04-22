@@ -20,7 +20,6 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 
 public class CoinsFragment extends Fragment implements View.OnClickListener {
 
@@ -42,11 +41,11 @@ public class CoinsFragment extends Fragment implements View.OnClickListener {
     private Button decButtonCoin1,decButtonCoin2,decButtonCoin3,decButtonCoin4,decButtonCoin5,decButtonCoin6,decButtonCoin7,decButtonCoin8;
     private Button resetButton, loadButton, saveButton;
 
-    private List<Double> m_listOfValues = new ArrayList<>();
+    private List<Double> m_listOfCoinValues = new ArrayList<>();
     private List<Button> m_listOfButtons = new ArrayList<>();
     private SimpleArrayMap<Integer,Integer> m_mapOfIndexToCoinTextView = new SimpleArrayMap<>();
     private SimpleArrayMap<EditText,Integer> m_mapOfEditTextIndex = new SimpleArrayMap<>();
-    private SimpleArrayMap<Button,EditText> m_mapOfButtonToEditText = new SimpleArrayMap<>();
+    private SimpleArrayMap<Button,EditText> m_mapOfButtonToEditText;
 
     DecimalFormat df = new DecimalFormat("#.00");
 
@@ -62,10 +61,10 @@ public class CoinsFragment extends Fragment implements View.OnClickListener {
         setmMapOfIndexToCoinTextView();
         setMapOfEditTextIndex();
         setListOfButtons();
-        setMapOfButtonToEditText();
+        setMapOfButtonsToEditText();
 
-//        setOnClickList();
-        setButtonListeners();
+        setOnClickList();
+        setOptionsButtonListeners();
 
         return view;
     }
@@ -84,16 +83,17 @@ public class CoinsFragment extends Fragment implements View.OnClickListener {
         {
             buttonName = "decrementButton";
         }
+
+        //dividir este método em 2 aqui, um retorna o tipo de botão
+        //o outro atribui a funcao do onClic()
         double totalValueUpdate = 0;
         switch (buttonName) {
             case "incrementButton":
-                Toast.makeText(getContext(),func,Toast.LENGTH_SHORT).show();
-//                totalValueUpdate = Double.valueOf(df.format(updateTotalValue(v)));
+                totalValueUpdate = Double.valueOf(df.format(updateTotalValue(v)));
                 totalValueTextView.setText(String.valueOf(totalValueUpdate));
                 break;
             case "decrementButton":
-                Toast.makeText(getContext(),func,Toast.LENGTH_SHORT).show();
-//                totalValueUpdate = Double.valueOf(df.format(updateTotalValue(v)));
+                totalValueUpdate = Double.valueOf(df.format(updateTotalValue(v)));
                 totalValueTextView.setText(String.valueOf(totalValueUpdate));
                 break;
             case "null":
@@ -106,38 +106,33 @@ public class CoinsFragment extends Fragment implements View.OnClickListener {
     }
 
 
-    public double updateTotalValue(View v, EditText numberOfCoinsEditText)
+    //still needs refactoring, method too long, can be divided by 3 parts or more
+    //DRY pattern
+    public double updateTotalValue(View v)
     {
+        int buttonViewId = v.getId();
+        int buttonOnMapId = 0;
+        EditText numberOfCoinsEditText = null;
+        for(int i = 0; i < m_mapOfButtonToEditText.size(); i++)
+        {
+            buttonOnMapId = m_mapOfButtonToEditText.keyAt(i).getId();
+            if( buttonOnMapId == buttonViewId)
+            {
+                numberOfCoinsEditText = m_mapOfButtonToEditText.valueAt(i);
+            }
+        }
 
-        CoinOperations co = new CoinOperations();
-        String idAsString,nameTypeOfButton,numberOfCoinsString;
+        if(numberOfCoinsEditText == null)
+        {
+            System.out.println("EDITTEXT IS NULL!");
+        }
 
-//        int name = v.getId();
-//        int id = 0;
-//        EditText numberOfCoinsEditText = null;
-//        for(int i = 0; i < m_mapOfButtonToEditText.size(); i++)
-//        {
-//            id = m_mapOfButtonToEditText.keyAt(i).getId();
-//            System.out.println("ID: "+id);
-//            System.out.println("NAME: " + name);
-//            if( id == name)
-//            {
-//                System.out.println("PASSA AQUI");
-//                numberOfCoinsEditText = m_mapOfButtonToEditText.get(i);
-//            }
-//
-//        }
-//
-//        if(numberOfCoinsEditText == null)
-//        {
-//            System.out.println("EDITTEXT IS NULL!");
-//        }
-
-        idAsString = v.getResources().getResourceEntryName(v.getId());
-        nameTypeOfButton = idAsString.substring(0,3);//"inc" or "dec" of increment and decrement
-        numberOfCoinsString = numberOfCoinsEditText.getText().toString();
+        String idAsString = v.getResources().getResourceEntryName(v.getId());
+        String nameTypeOfButton = idAsString.substring(0,3);//"inc" or "dec" of increment and decrement
+        String numberOfCoinsString = numberOfCoinsEditText.getText().toString();
         System.out.println("NUMBER OF COINS: " + numberOfCoinsString);
         //index--;
+
         //guarda o valor das moedas antes de o alterar
         int totalNumberOfCoinsBefore;
 
@@ -153,6 +148,7 @@ public class CoinsFragment extends Fragment implements View.OnClickListener {
         }
 
         //e agora muda o campo e actualiza o valor de acordo com o botao
+        CoinOperations co = new CoinOperations();
         int totalNumberOfCoinsAfter = 0;
         if(nameTypeOfButton.equalsIgnoreCase("inc")) {
             System.out.println("INCREMENT");
@@ -175,7 +171,7 @@ public class CoinsFragment extends Fragment implements View.OnClickListener {
         System.out.println("DIFF: " + diff);
 
         int correspondingValueIndex = getMapOfEditTextIndex().get(numberOfCoinsEditText);
-        double diffOfValue = diff * m_listOfValues.get(correspondingValueIndex);
+        double diffOfValue = diff * m_listOfCoinValues.get(correspondingValueIndex);
         double totalValueBefore = Double.valueOf(totalValueTextView.getText().toString());
         double totalValueUpdate = totalValueBefore + diffOfValue;
 
@@ -208,133 +204,8 @@ public class CoinsFragment extends Fragment implements View.OnClickListener {
     }
 
 
-    private void setButtonListeners()
+    private void setOptionsButtonListeners()
     {
-        incButtonCoin1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                double totalValueUpdate;
-
-                totalValueUpdate = Double.valueOf(df.format(updateTotalValue(v,numberCoins1)));
-                totalValueTextView.setText(String.valueOf(totalValueUpdate));
-
-            }
-        });
-
-        incButtonCoin2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                double totalValueUpdate = Double.valueOf(df.format(updateTotalValue(v,numberCoins2)));
-                totalValueTextView.setText(String.valueOf(totalValueUpdate));
-            }
-        });
-
-        incButtonCoin3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                double totalValueUpdate = Double.valueOf(df.format(updateTotalValue(v,numberCoins3)));
-                totalValueTextView.setText(String.valueOf(totalValueUpdate));
-            }
-        });
-
-        incButtonCoin4.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                double totalValueUpdate = Double.valueOf(df.format(updateTotalValue(v,numberCoins4)));
-                totalValueTextView.setText(String.valueOf(totalValueUpdate));
-            }
-        });
-        incButtonCoin5.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                double totalValueUpdate = Double.valueOf(df.format(updateTotalValue(v,numberCoins5)));
-                totalValueTextView.setText(String.valueOf(totalValueUpdate));
-            }
-        });
-        incButtonCoin6.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                double totalValueUpdate = Double.valueOf(df.format(updateTotalValue(v,numberCoins6)));
-                totalValueTextView.setText(String.valueOf(totalValueUpdate));
-            }
-        });
-        incButtonCoin7.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                double totalValueUpdate = Double.valueOf(df.format(updateTotalValue(v,numberCoins7)));
-                totalValueTextView.setText(String.valueOf(totalValueUpdate));
-            }
-        });
-        incButtonCoin8.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                double totalValueUpdate = Double.valueOf(df.format(updateTotalValue(v,numberCoins8)));
-                totalValueTextView.setText(String.valueOf(totalValueUpdate));
-
-            }
-        });
-
-
-        /////////////////////////////////////////////////////////////
-        decButtonCoin1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                double totalValueUpdate = updateTotalValue(v,numberCoins1);
-                totalValueTextView.setText(String.valueOf(totalValueUpdate));
-            }
-        });
-
-        decButtonCoin2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                double totalValueUpdate = updateTotalValue(v,numberCoins2);
-                totalValueTextView.setText(String.valueOf(totalValueUpdate));
-            }
-        });
-
-        decButtonCoin3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                double totalValueUpdate = updateTotalValue(v,numberCoins3);
-                totalValueTextView.setText(String.valueOf(totalValueUpdate));
-            }
-        });
-
-        decButtonCoin4.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                double totalValueUpdate = updateTotalValue(v,numberCoins4);
-                totalValueTextView.setText(String.valueOf(totalValueUpdate));
-            }
-        });
-        decButtonCoin5.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                double totalValueUpdate = updateTotalValue(v,numberCoins5);
-                totalValueTextView.setText(String.valueOf(totalValueUpdate));
-            }
-        });
-        decButtonCoin6.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                double totalValueUpdate = updateTotalValue(v,numberCoins6);
-                totalValueTextView.setText(String.valueOf(totalValueUpdate));
-            }
-        });
-        decButtonCoin7.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                double totalValueUpdate = updateTotalValue(v,numberCoins7);
-                totalValueTextView.setText(String.valueOf(totalValueUpdate));
-            }
-        });
-        decButtonCoin8.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                double totalValueUpdate = updateTotalValue(v,numberCoins8);
-                totalValueTextView.setText(String.valueOf(totalValueUpdate));
-            }
-        });
 
         resetButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -363,13 +234,6 @@ public class CoinsFragment extends Fragment implements View.OnClickListener {
 
     }
 
-
-    private void setListOfValueOfCoins()
-    {
-        m_listOfValues = Arrays.asList(VALUE_COIN_1,VALUE_COIN_2,VALUE_COIN_3,VALUE_COIN_4,VALUE_COIN_5,VALUE_COIN_6,VALUE_COIN_7,VALUE_COIN_8);
-
-    }
-
     private void initWidgetComponents(View view)
     {
         //initialize EditTexts
@@ -392,11 +256,6 @@ public class CoinsFragment extends Fragment implements View.OnClickListener {
         incButtonCoin7 = (Button) view.findViewById(R.id.incButton7);
         incButtonCoin8 = (Button) view.findViewById(R.id.incButton8);
 
-        List<Integer> list = new ArrayList<>();
-        list.add(R.id.incButton1);
-
-
-
         //initialize buttons of subtraction
         decButtonCoin1 = (Button) view.findViewById(R.id.decButton1);
         decButtonCoin2 = (Button) view.findViewById(R.id.decButton2);
@@ -416,7 +275,18 @@ public class CoinsFragment extends Fragment implements View.OnClickListener {
         loadButton = (Button) view.findViewById(R.id.loadButton);
     }
 
-    public ArrayList<String> getListOfEditTextAsString()
+    private void resetValues()
+    {
+        setDefaultValuesToNumberOfCoinsEditText();
+        totalValueTextView.setText(DEFAULT_VALUE);
+    }
+
+    private void setListOfValueOfCoins()
+    {
+        m_listOfCoinValues = Arrays.asList(VALUE_COIN_1,VALUE_COIN_2,VALUE_COIN_3,VALUE_COIN_4,VALUE_COIN_5,VALUE_COIN_6,VALUE_COIN_7,VALUE_COIN_8);
+
+    }
+    private ArrayList<String> getListOfEditTextAsString()
     {
         ArrayList<String> listOfEditTextAsString = new ArrayList<>();
 
@@ -431,30 +301,11 @@ public class CoinsFragment extends Fragment implements View.OnClickListener {
 
     }
 
-    private void setMapOfButtonToEditText()
-    {
-        int i = 0;
-        int limit = getListWithEditTexts().size();
-        for(Button b : getListWithButtons())
-        {
-            m_mapOfButtonToEditText.put(b,getListWithEditTexts().get(i));
-            i++;
-            if(i == limit)
-            {
-                i = 0;
-            }
-        }
-    }
     private void setListOfButtons()
     {
         m_listOfButtons = Arrays.asList(incButtonCoin1,incButtonCoin2,incButtonCoin3,incButtonCoin4,incButtonCoin5,
                 incButtonCoin6,incButtonCoin7,incButtonCoin8,decButtonCoin1,decButtonCoin2,decButtonCoin3,decButtonCoin4,decButtonCoin5,
                 decButtonCoin6,decButtonCoin7,decButtonCoin8);
-    }
-
-    private List<Button> getListWithButtons()
-    {
-        return m_listOfButtons;
     }
 
     private void setDefaultValuesToNumberOfCoinsEditText()
@@ -469,11 +320,6 @@ public class CoinsFragment extends Fragment implements View.OnClickListener {
 
     }
 
-    private void resetValues()
-    {
-        setDefaultValuesToNumberOfCoinsEditText();
-        totalValueTextView.setText(DEFAULT_VALUE);
-    }
     private void setmMapOfIndexToCoinTextView()
     {
         int i = 1;
@@ -496,6 +342,25 @@ public class CoinsFragment extends Fragment implements View.OnClickListener {
 
     }
 
+    private void setMapOfButtonsToEditText()
+    {
+        m_mapOfButtonToEditText = new SimpleArrayMap<>();
+        int i = 0;
+        int limit = getListWithEditTexts().size();
+        for(Button b : getListWithButtons())
+        {
+            m_mapOfButtonToEditText.put(b,getListWithEditTexts().get(i));
+            i++;
+            if(i == limit)
+            {
+                //pq assim iteramos novamente a lista de EditText
+                // ficando 1 EditText associado a 2 botões
+                i = 0;
+            }
+        }
+    }
+
+
     public SimpleArrayMap<EditText,Integer> getMapOfEditTextIndex()
     {
         return m_mapOfEditTextIndex;
@@ -507,6 +372,11 @@ public class CoinsFragment extends Fragment implements View.OnClickListener {
                 Arrays.asList(numberCoins1,numberCoins2,numberCoins3,numberCoins4,
                         numberCoins5,numberCoins6,numberCoins7,numberCoins8);
         return list;
+    }
+
+    private List<Button> getListWithButtons()
+    {
+        return m_listOfButtons;
     }
 
     private List<Button> setListOfIncrementButtons()

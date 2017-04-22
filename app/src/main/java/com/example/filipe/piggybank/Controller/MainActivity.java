@@ -10,7 +10,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import com.example.filipe.piggybank.Fragments.CoinsFragment;
 import com.example.filipe.piggybank.Fragments.NotesFragment;
-import com.example.filipe.piggybank.Fragments.SectionsPageAdapter;
 import com.example.filipe.piggybank.Fragments.StatsFragment;
 import com.example.filipe.piggybank.Fragments.TotalFragment;
 import com.example.filipe.piggybank.R;

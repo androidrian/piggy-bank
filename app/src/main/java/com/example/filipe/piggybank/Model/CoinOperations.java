@@ -41,7 +41,7 @@ public class CoinOperations {
     }
 
     //refactor this method
-    public double getTotalSumOfCoinValue(EditText editText, int index, List<Double> l_coinValues)
+    private double getTotalSumOfCoinValue(EditText editText, int index, List<Double> l_coinValues)
     {
         double total, numberOfCoins, valueOfCoin;
         String numberOfCoinsText;
@@ -57,18 +57,6 @@ public class CoinOperations {
             editText.setText(DEFAULT_VALUE);//isto nao devia estar aqui mas para ja fica
         }
         return total;
-    }
-
-
-    private String getTypeOfButtonName(View v)
-    {
-        String nameTypeOfButton, idAsString;
-
-        idAsString = v.getResources().getResourceEntryName(v.getId());
-        nameTypeOfButton = idAsString.substring(0,3);//"inc" or "dec" of increment and decrement
-
-        return nameTypeOfButton;
-
     }
 
     public double takeCoinFromEditText(EditText editText){
