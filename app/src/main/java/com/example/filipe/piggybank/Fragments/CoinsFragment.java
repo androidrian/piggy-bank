@@ -176,45 +176,33 @@ public class CoinsFragment extends Fragment implements View.OnClickListener {
         String idAsString = v.getResources().getResourceEntryName(v.getId());
         String nameTypeOfButton = idAsString.substring(0,3);//"inc" or "dec" of increment and decrement
         String numberOfCoinsString = numberOfCoinsEditText.getText().toString();
-        System.out.println("NUMBER OF COINS: " + numberOfCoinsString);
-        //index--;
-
+  
         //guarda o valor das moedas antes de o alterar
         int totalNumberOfCoinsBefore;
-
         if(numberOfCoinsString.equalsIgnoreCase(" "))
         {
             totalNumberOfCoinsBefore = 0;
-            System.out.println("TOTAL NUMBER OF COINS BEFORE: " + totalNumberOfCoinsBefore);
         }
         else
         {
             totalNumberOfCoinsBefore = Integer.valueOf(numberOfCoinsString);
-            System.out.println("TOTAL NUMBER OF COINS BEFORE: " + totalNumberOfCoinsBefore);
         }
 
         //e agora muda o campo e actualiza o valor de acordo com o botao
         CoinOperations co = new CoinOperations();
         int totalNumberOfCoinsAfter = 0;
         if(nameTypeOfButton.equalsIgnoreCase("inc")) {
-            System.out.println("INCREMENT");
             totalNumberOfCoinsAfter = (int) co.addCoinToEditText(numberOfCoinsEditText);
-            numberOfCoinsEditText.setText(String.valueOf(totalNumberOfCoinsAfter));
         }
         if(nameTypeOfButton.equalsIgnoreCase("dec"))
         {
-            System.out.println("DECREMENT");
             totalNumberOfCoinsAfter = (int) co.takeCoinFromEditText(numberOfCoinsEditText);
-            numberOfCoinsEditText.setText(String.valueOf(totalNumberOfCoinsAfter));
         }
+        numberOfCoinsEditText.setText(String.valueOf(totalNumberOfCoinsAfter));
 
         //parte final do update
-
-        System.out.println("TOTAL NUMBER OF COINS AFTER: " + totalNumberOfCoinsAfter);
-
         int diff =
                 totalNumberOfCoinsAfter - totalNumberOfCoinsBefore;
-        System.out.println("DIFF: " + diff);
 
         int correspondingValueIndex = getMapOfEditTextIndex().get(numberOfCoinsEditText);
         double diffOfValue = diff * m_listOfCoinValues.get(correspondingValueIndex);
