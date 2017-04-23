@@ -43,7 +43,6 @@ public class CoinsFragment extends Fragment implements View.OnClickListener {
 
     private List<Double> m_listOfCoinValues = new ArrayList<>();
     private List<Button> m_listOfButtons = new ArrayList<>();
-    private SimpleArrayMap<Integer,Integer> m_mapOfIndexToCoinTextView = new SimpleArrayMap<>();
     private SimpleArrayMap<EditText,Integer> m_mapOfEditTextIndex = new SimpleArrayMap<>();
     private SimpleArrayMap<Button,EditText> m_mapOfButtonToEditText;
 
@@ -55,54 +54,108 @@ public class CoinsFragment extends Fragment implements View.OnClickListener {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_coins_layout, container, false);
 
+
+
         initWidgetComponents(view);
         setDefaultValuesToNumberOfCoinsEditText();
         setListOfValueOfCoins();
-        setmMapOfIndexToCoinTextView();
         setMapOfEditTextIndex();
         setListOfButtons();
         setMapOfButtonsToEditText();
 
-        setOnClickList();
+        setOnClickButtonList();
         setOptionsButtonListeners();
 
         return view;
     }
 
+
     @Override
     public void onClick(View v) {
 
-        String idAsString = v.getResources().getResourceEntryName(v.getId());
-        String buttonName = "null";
-        String func = idAsString.substring(0,3);
-        if(func.equalsIgnoreCase("inc"))
-        {
-             buttonName = "incrementButton";
-
-        }else if(func.equalsIgnoreCase("dec"))
-        {
-            buttonName = "decrementButton";
-        }
-
-        //dividir este método em 2 aqui, um retorna o tipo de botão
-        //o outro atribui a funcao do onClic()
+        String buttonName = getTypeOfButtonName(v);
         double totalValueUpdate = 0;
         switch (buttonName) {
-            case "incrementButton":
-                totalValueUpdate = Double.valueOf(df.format(updateTotalValue(v)));
-                totalValueTextView.setText(String.valueOf(totalValueUpdate));
-                break;
-            case "decrementButton":
+            case "addTakeCoinButton":
                 totalValueUpdate = Double.valueOf(df.format(updateTotalValue(v)));
                 totalValueTextView.setText(String.valueOf(totalValueUpdate));
                 break;
             case "null":
-                Toast.makeText(getContext(),func,Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(),null,Toast.LENGTH_SHORT).show();
+                break;
+            case "save":
+
+                break;
+            case "load":
+
+                break;
+            case "reset":
+
+                break;
             default:
                 Toast.makeText(getContext(),"UNKNOWN BUTTON",Toast.LENGTH_SHORT).show();
-
+                break;
         }
 
+    }
+
+    private String getTypeOfButtonName(View v)
+    {
+        Object obj = v.findViewById(v.getId());
+        String buttonName = "";
+        if(obj instanceof Button)
+        {
+            String idAsString = v.getResources().getResourceEntryName(v.getId());
+            String func = idAsString.substring(0,3);
+            if(func.equalsIgnoreCase("inc") || func.equalsIgnoreCase("dec"))
+            {
+                buttonName = "addTakeCoinButton";
+
+            }
+        }
+
+        return buttonName;
+    }
+
+    private void initWidgetComponents(View view)
+    {
+        //initialize EditTexts
+        numberCoins1 = (EditText) view.findViewById(R.id.coinText1);
+        numberCoins2 = (EditText) view.findViewById(R.id.coinText2);
+        numberCoins3 = (EditText) view.findViewById(R.id.coinText3);
+        numberCoins4 = (EditText) view.findViewById(R.id.coinText4);
+        numberCoins5 = (EditText) view.findViewById(R.id.coinText5);
+        numberCoins6 = (EditText) view.findViewById(R.id.coinText6);
+        numberCoins7 = (EditText) view.findViewById(R.id.coinText7);
+        numberCoins8 = (EditText) view.findViewById(R.id.coinText8);
+
+        //initialize button of addition
+        incButtonCoin1 = (Button) view.findViewById(R.id.incButton1);
+        incButtonCoin2 = (Button) view.findViewById(R.id.incButton2);
+        incButtonCoin3 = (Button) view.findViewById(R.id.incButton3);
+        incButtonCoin4 = (Button) view.findViewById(R.id.incButton4);
+        incButtonCoin5 = (Button) view.findViewById(R.id.incButton5);
+        incButtonCoin6 = (Button) view.findViewById(R.id.incButton6);
+        incButtonCoin7 = (Button) view.findViewById(R.id.incButton7);
+        incButtonCoin8 = (Button) view.findViewById(R.id.incButton8);
+
+        //initialize buttons of subtraction
+        decButtonCoin1 = (Button) view.findViewById(R.id.decButton1);
+        decButtonCoin2 = (Button) view.findViewById(R.id.decButton2);
+        decButtonCoin3 = (Button) view.findViewById(R.id.decButton3);
+        decButtonCoin4 = (Button) view.findViewById(R.id.decButton4);
+        decButtonCoin5 = (Button) view.findViewById(R.id.decButton5);
+        decButtonCoin6 = (Button) view.findViewById(R.id.decButton6);
+        decButtonCoin7 = (Button) view.findViewById(R.id.decButton7);
+        decButtonCoin8 = (Button) view.findViewById(R.id.decButton8);
+
+        //initialize TextViews
+        totalValueTextView = (TextView) view.findViewById(R.id.totalTextView);
+
+        //options buttons
+        resetButton = (Button) view.findViewById(R.id.resetButton);
+        saveButton = (Button) view.findViewById(R.id.saveButton);
+        loadButton = (Button) view.findViewById(R.id.loadButton);
     }
 
 
@@ -110,17 +163,10 @@ public class CoinsFragment extends Fragment implements View.OnClickListener {
     //DRY pattern
     public double updateTotalValue(View v)
     {
-        int buttonViewId = v.getId();
-        int buttonOnMapId = 0;
         EditText numberOfCoinsEditText = null;
-        for(int i = 0; i < m_mapOfButtonToEditText.size(); i++)
-        {
-            buttonOnMapId = m_mapOfButtonToEditText.keyAt(i).getId();
-            if( buttonOnMapId == buttonViewId)
-            {
-                numberOfCoinsEditText = m_mapOfButtonToEditText.valueAt(i);
-            }
-        }
+        //try catch NullPointerException
+        Button buttonClicked = (Button) v.findViewById(v.getId());
+        numberOfCoinsEditText = m_mapOfButtonToEditText.get(buttonClicked);
 
         if(numberOfCoinsEditText == null)
         {
@@ -178,7 +224,7 @@ public class CoinsFragment extends Fragment implements View.OnClickListener {
         return totalValueUpdate;
     }
 
-    private void setOnClickList()
+    private void setOnClickButtonList()
     {
 
         for(Button b : m_listOfButtons)
@@ -219,46 +265,6 @@ public class CoinsFragment extends Fragment implements View.OnClickListener {
 
     }
 
-    private void initWidgetComponents(View view)
-    {
-        //initialize EditTexts
-        numberCoins1 = (EditText) view.findViewById(R.id.coinText1);
-        numberCoins2 = (EditText) view.findViewById(R.id.coinText2);
-        numberCoins3 = (EditText) view.findViewById(R.id.coinText3);
-        numberCoins4 = (EditText) view.findViewById(R.id.coinText4);
-        numberCoins5 = (EditText) view.findViewById(R.id.coinText5);
-        numberCoins6 = (EditText) view.findViewById(R.id.coinText6);
-        numberCoins7 = (EditText) view.findViewById(R.id.coinText7);
-        numberCoins8 = (EditText) view.findViewById(R.id.coinText8);
-
-        //initialize button of addition
-        incButtonCoin1 = (Button) view.findViewById(R.id.incButton1);
-        incButtonCoin2 = (Button) view.findViewById(R.id.incButton2);
-        incButtonCoin3 = (Button) view.findViewById(R.id.incButton3);
-        incButtonCoin4 = (Button) view.findViewById(R.id.incButton4);
-        incButtonCoin5 = (Button) view.findViewById(R.id.incButton5);
-        incButtonCoin6 = (Button) view.findViewById(R.id.incButton6);
-        incButtonCoin7 = (Button) view.findViewById(R.id.incButton7);
-        incButtonCoin8 = (Button) view.findViewById(R.id.incButton8);
-
-        //initialize buttons of subtraction
-        decButtonCoin1 = (Button) view.findViewById(R.id.decButton1);
-        decButtonCoin2 = (Button) view.findViewById(R.id.decButton2);
-        decButtonCoin3 = (Button) view.findViewById(R.id.decButton3);
-        decButtonCoin4 = (Button) view.findViewById(R.id.decButton4);
-        decButtonCoin5 = (Button) view.findViewById(R.id.decButton5);
-        decButtonCoin6 = (Button) view.findViewById(R.id.decButton6);
-        decButtonCoin7 = (Button) view.findViewById(R.id.decButton7);
-        decButtonCoin8 = (Button) view.findViewById(R.id.decButton8);
-
-        //initialize TextViews
-        totalValueTextView = (TextView) view.findViewById(R.id.totalTextView);
-
-        //options buttons
-        resetButton = (Button) view.findViewById(R.id.resetButton);
-        saveButton = (Button) view.findViewById(R.id.saveButton);
-        loadButton = (Button) view.findViewById(R.id.loadButton);
-    }
 
     private void resetValues()
     {
@@ -305,16 +311,6 @@ public class CoinsFragment extends Fragment implements View.OnClickListener {
 
     }
 
-    private void setmMapOfIndexToCoinTextView()
-    {
-        int i = 1;
-        for(EditText editText : getListWithEditTexts())
-        {
-            m_mapOfIndexToCoinTextView.put(editText.getId(),i);
-            i++;
-        }
-
-    }
 
     private void setMapOfEditTextIndex()
     {
