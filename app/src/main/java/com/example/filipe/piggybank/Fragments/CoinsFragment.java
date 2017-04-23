@@ -180,26 +180,11 @@ public class CoinsFragment extends Fragment implements View.OnClickListener {
 
     private void setOnClickList()
     {
-        incButtonCoin1.setOnClickListener(this);
-        incButtonCoin2.setOnClickListener(this);
-        incButtonCoin3.setOnClickListener(this);
-        incButtonCoin4.setOnClickListener(this);
-        incButtonCoin5.setOnClickListener(this);
-        incButtonCoin6.setOnClickListener(this);
-        incButtonCoin7.setOnClickListener(this);
-        incButtonCoin8.setOnClickListener(this);
 
-        decButtonCoin1.setOnClickListener(this);
-        decButtonCoin2.setOnClickListener(this);
-        decButtonCoin3.setOnClickListener(this);
-        decButtonCoin4.setOnClickListener(this);
-        decButtonCoin5.setOnClickListener(this);
-        decButtonCoin6.setOnClickListener(this);
-        decButtonCoin7.setOnClickListener(this);
-        decButtonCoin8.setOnClickListener(this);
-
-
-
+        for(Button b : m_listOfButtons)
+        {
+            b.setOnClickListener(this);
+        }
 
     }
 
