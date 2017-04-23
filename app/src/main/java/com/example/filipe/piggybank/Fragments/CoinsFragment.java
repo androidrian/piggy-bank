@@ -226,7 +226,6 @@ public class CoinsFragment extends Fragment implements View.OnClickListener {
 
     private void setOnClickButtonList()
     {
-
         for(Button b : m_listOfButtons)
         {
             b.setOnClickListener(this);
@@ -301,23 +300,19 @@ public class CoinsFragment extends Fragment implements View.OnClickListener {
 
     private void setDefaultValuesToNumberOfCoinsEditText()
     {
-        EditText editText;
-        for(int i = 0; i< getListWithEditTexts().size(); i++)
-        {
-            editText = getListWithEditTexts().get(i);
-            editText.setText(DEFAULT_VALUE);
-        }
-
-
+       for(EditText e : getListWithEditText())
+       {
+          e.setText(DEFAULT_VALUE);
+       }
     }
 
 
     private void setMapOfEditTextIndex()
     {
-        int i = 0;
-        for(EditText t : getListWithEditTexts())
+        int index = 0;
+        for(EditText e : getListWithEditTexts())
         {
-            m_mapOfEditTextIndex.put(t,i);
+            m_mapOfEditTextIndex.put(e,index);
             i++;
         }
 
@@ -330,7 +325,8 @@ public class CoinsFragment extends Fragment implements View.OnClickListener {
         int limit = getListWithEditTexts().size();
         for(Button b : getListWithButtons())
         {
-            m_mapOfButtonToEditText.put(b,getListWithEditTexts().get(i));
+            EditText e = getListWithEditTexts().get(i);
+            m_mapOfButtonToEditText.put(b,e);
             i++;
             if(i == limit)
             {
