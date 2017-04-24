@@ -12,7 +12,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.filipe.piggybank.Model.CoinOperations;
+import com.example.filipe.piggybank.Services.CoinOperations;
 import com.example.filipe.piggybank.R;
 import com.example.filipe.piggybank.Services.FileUtils;
 

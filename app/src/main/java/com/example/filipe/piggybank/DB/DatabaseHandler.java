@@ -5,6 +5,8 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import com.example.filipe.piggybank.Model.Coin;
+
 /**
  * Created by Filipe on 23/04/2017.
  */

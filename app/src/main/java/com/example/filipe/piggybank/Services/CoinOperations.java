@@ -1,4 +1,4 @@
-package com.example.filipe.piggybank.Model;
+package com.example.filipe.piggybank.Services;
 
 import android.view.View;
 import android.widget.Button;

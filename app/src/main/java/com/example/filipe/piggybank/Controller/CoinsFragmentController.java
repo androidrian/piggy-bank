@@ -1,7 +1,7 @@
 package com.example.filipe.piggybank.Controller;
 
 import com.example.filipe.piggybank.Fragments.CoinsFragment;
-import com.example.filipe.piggybank.Model.CoinOperations;
+import com.example.filipe.piggybank.Services.CoinOperations;
 
 /**
  * Created by Filipe on 22/04/2017.

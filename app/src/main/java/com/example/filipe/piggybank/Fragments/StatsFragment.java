@@ -7,7 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import com.example.filipe.piggybank.Model.StatsOperations;
+import com.example.filipe.piggybank.Services.StatsOperations;
 import com.example.filipe.piggybank.R;
 import com.example.filipe.piggybank.Services.FileUtils;
 import java.util.ArrayList;

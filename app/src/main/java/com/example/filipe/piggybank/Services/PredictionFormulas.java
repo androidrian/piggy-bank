@@ -1,4 +1,4 @@
-package com.example.filipe.piggybank.Model;
+package com.example.filipe.piggybank.Services;
 
 /**
  * Created by Filipe on 18/04/2017.
