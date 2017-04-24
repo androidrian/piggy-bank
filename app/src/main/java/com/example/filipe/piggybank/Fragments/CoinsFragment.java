@@ -288,7 +288,7 @@ public class CoinsFragment extends Fragment implements View.OnClickListener {
 
     private void setDefaultValuesToNumberOfCoinsEditText()
     {
-       for(EditText e : getListWithEditText())
+       for(EditText e : getListWithEditTexts())
        {
           e.setText(DEFAULT_VALUE);
        }
@@ -301,7 +301,7 @@ public class CoinsFragment extends Fragment implements View.OnClickListener {
         for(EditText e : getListWithEditTexts())
         {
             m_mapOfEditTextIndex.put(e,index);
-            i++;
+            index++;
         }
 
     }
