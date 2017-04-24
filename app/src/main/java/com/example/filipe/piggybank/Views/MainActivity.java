@@ -1,4 +1,4 @@
-package com.example.filipe.piggybank.Controller;
+package com.example.filipe.piggybank.Views;
 
 import android.annotation.TargetApi;
 import android.os.Build;
@@ -8,10 +8,12 @@ import android.support.v4.view.ViewPager;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import com.example.filipe.piggybank.Fragments.CoinsFragment;
-import com.example.filipe.piggybank.Fragments.NotesFragment;
-import com.example.filipe.piggybank.Fragments.StatsFragment;
-import com.example.filipe.piggybank.Fragments.TotalFragment;
+
+import com.example.filipe.piggybank.Controller.SectionsPageAdapter;
+import com.example.filipe.piggybank.Views.CoinsFragment;
+import com.example.filipe.piggybank.Views.NotesFragment;
+import com.example.filipe.piggybank.Views.StatsFragment;
+import com.example.filipe.piggybank.Views.TotalFragment;
 import com.example.filipe.piggybank.R;
 import net.danlew.android.joda.JodaTimeAndroid;
 

@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#ff4081"
-    tools:context="com.example.filipe.piggybank.Fragments.NotesFragment">
+    tools:context="com.example.filipe.piggybank.Views.NotesFragment">
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"

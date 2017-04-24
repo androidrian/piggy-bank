@@ -95,16 +95,4 @@ public class CoinOperations {
 
         return total;
     }
-
-
-
-
-
-
-
-
-
-
-
-
 }

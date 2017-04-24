@@ -12,7 +12,7 @@ public class PiggyBank {
 
     private Coin coin;
     private List<Coin> mListOfCoins;
-    private double total;
+
 
     public PiggyBank(List<Coin> listOfCoins)
     {
@@ -37,9 +37,10 @@ public class PiggyBank {
         mListOfCoins.add(coin);
         coin = new Coin("UmC",0.01);
         mListOfCoins.add(coin);
+    }
 
-
-
-
+    public List<Coin> getListOfCoins()
+    {
+        return mListOfCoins;
     }
 }

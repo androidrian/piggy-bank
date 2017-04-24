@@ -1,4 +1,4 @@
-package com.example.filipe.piggybank.Fragments;
+package com.example.filipe.piggybank.Views;
 
 
 import android.os.Bundle;

@@ -15,7 +15,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
 
     private static final int DATABASE_VERSION = 1;
-    private static final String DATABASE_NAME = "Records.db";
+    private static final String DATABASE_NAME = "PiggyBank.db";
     public static final String TABLE_COINS = "coins";
     public static final String COLUM_ID = "id";
     public static final String COLUM_NAME_1 = "coin_2";
@@ -62,7 +62,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     public void addCoin(Coin coin)
     {
         ContentValues values = new ContentValues();
-        values.put(COLUM_NAME_1, coin.getM_coinName());
+        values.put(COLUM_NAME_1, coin.getCoinName());
         SQLiteDatabase db = getWritableDatabase();
         db.insert(TABLE_COINS,null,values);
         db.close();
