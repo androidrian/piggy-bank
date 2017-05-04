@@ -1,4 +1,4 @@
-package com.example.filipe.piggybank.DB;
+package com.example.filipe.piggybank.Repository;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -17,6 +17,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     private static final int DATABASE_VERSION = 1;
     private static final String DATABASE_NAME = "PiggyBank.db";
     public static final String TABLE_COINS = "coins";
+    public static final String TABLE_PIGGY_BANK = "piggyBank";
+
     public static final String COLUM_ID = "id";
     public static final String COLUM_NAME_1 = "coin_2";
     public static final String COLUM_NAME_2 = "coin_1";

@@ -2,6 +2,7 @@ package com.example.filipe.piggybank.Views;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,10 +30,13 @@ public class TotalFragment extends Fragment {
         FileUtils services = new FileUtils();
         String[] data = services.readDataFromFile();
 
+        //vais buscar apenas o total (ultima posicao)
         int position = data.length-1;
         String totalValue = data[position];
-        String integerPart = getIntegerPart(totalValue);
-        String decimalPart = getDecimalPart(totalValue);
+        Log.d(totalValue,"TOTAL VALUE");
+        String totalValueSplit[] = totalValue.split("\\.");
+        String integerPart = getIntegerPart(totalValueSplit);
+        String decimalPart = getDecimalPart(totalValueSplit);
         mTotalIntegerPartTextView.setText(integerPart);
         mTotalDecimalPartTextView.setText(decimalPart);
 
@@ -41,14 +45,25 @@ public class TotalFragment extends Fragment {
     }
     //problem aqui...se o inteiro tiver + que 1 digito
     //back to this later
-    private String getIntegerPart(String totalValue)
+    private String getIntegerPart(String[] data)
     {
-        return totalValue.substring(0,1);
+        String totalIntegerPart;
+
+        Log.d(" -->" + String.valueOf(data.length),"TAMANHO DO VEC");
+
+        totalIntegerPart = data[0];
+
+        return totalIntegerPart;
     }
 
-    private String getDecimalPart(String totalValue)
+    private String getDecimalPart(String[] data)
     {
-        return totalValue.substring(1,4);
+
+        String totalDecimalPart;
+
+        totalDecimalPart = "."+data[1];
+
+        return totalDecimalPart;
     }
 
 }
