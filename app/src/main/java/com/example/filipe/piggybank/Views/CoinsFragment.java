@@ -12,6 +12,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.filipe.piggybank.Repository.DatabaseHandler;
 import com.example.filipe.piggybank.Services.CoinOperations;
 import com.example.filipe.piggybank.R;
 import com.example.filipe.piggybank.Services.FileUtils;
@@ -247,6 +248,9 @@ public class CoinsFragment extends Fragment implements View.OnClickListener {
             public void onClick(View v) {
                 FileUtils service = new FileUtils();
                 service.writeToSD(getListOfEditTextAsString(),v.getContext(), totalValueTextView);
+                DatabaseHandler db = new DatabaseHandler(getContext());
+                db.addRecordToDatabase(getListOfEditTextAsInteger());
+
             }
         });
 
@@ -277,6 +281,20 @@ public class CoinsFragment extends Fragment implements View.OnClickListener {
 
         return listOfEditTextAsString;
 
+    }
+
+    public ArrayList<Integer> getListOfEditTextAsInteger()
+    {
+        ArrayList<Integer> listOfEditTextAsInteger = new ArrayList<>();
+
+        int value;
+        for(EditText e : getListWithEditTexts())
+        {
+            value = Integer.parseInt(e.getText().toString());
+            listOfEditTextAsInteger.add(value);
+        }
+
+        return listOfEditTextAsInteger;
     }
 
     private void setListOfButtons()

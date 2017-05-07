@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
 import com.example.filipe.piggybank.Controller.SectionsPageAdapter;
+import com.example.filipe.piggybank.Repository.DatabaseHandler;
 import com.example.filipe.piggybank.Views.CoinsFragment;
 import com.example.filipe.piggybank.Views.NotesFragment;
 import com.example.filipe.piggybank.Views.StatsFragment;
@@ -22,11 +23,15 @@ public class MainActivity extends AppCompatActivity{
     private static final String TAG = "MainActivity";
     private SectionsPageAdapter mSectionsPagerAdapter;
     private ViewPager viewPager;
+    DatabaseHandler db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        db = new DatabaseHandler(this);
+
 
         if(savedInstanceState == null)
         {
@@ -47,6 +52,8 @@ public class MainActivity extends AppCompatActivity{
         if (shouldAskPermissions()) {
             askPermissions();
         }
+
+
     }
 
     public void setupViewPager(ViewPager viewPager)

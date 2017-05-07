@@ -33,14 +33,10 @@ public class StatsFragment extends Fragment {
         Log.d(TAG,"onCreateView: Starting...");
 
         initComponents(view);
-
-
         FileUtils services = new FileUtils();
 
-        List<Integer> listNumberOfCoins = services.getListWithNumberOfCoinsInBank();
-
-        StatsOperations stats = new StatsOperations();
-        setCoinPercentageValues(listNumberOfCoins);
+        List<Integer> listNumberOfCoins = services.getFromFileListWithNumberOfCoinsInBank();
+        setCoinPercentageValuesOnTextViews(listNumberOfCoins);
 
         return view;
     }
@@ -94,7 +90,7 @@ public class StatsFragment extends Fragment {
 
     }
 
-    private void setCoinPercentageValues(List<Integer> listNumberOfCoins)
+    private void setCoinPercentageValuesOnTextViews(List<Integer> listNumberOfCoins)
     {
         StatsOperations stats = new StatsOperations();
         ArrayList<Double> listRelativeFr = stats.getListWithRelativeFrequencyOfCoins(listNumberOfCoins);

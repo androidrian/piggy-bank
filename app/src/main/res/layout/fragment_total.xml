@@ -14,7 +14,7 @@
         <TextView
             android:id="@+id/totalIntegerPartTextView"
             android:layout_width="149dp"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_weight="0.34"
             android:paddingLeft="100dp"
             android:paddingTop="100dp"
