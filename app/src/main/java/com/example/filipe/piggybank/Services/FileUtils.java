@@ -2,9 +2,13 @@ package com.example.filipe.piggybank.Services;
 
 import android.content.Context;
 import android.os.Environment;
+import android.util.Log;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.example.filipe.piggybank.DB.DatabaseHelper;
+import com.example.filipe.piggybank.Views.MainActivity;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -21,19 +25,21 @@ import java.util.Scanner;
 
 public class FileUtils {
 
+    private String TAG = "FileUtils";
     private String fileName = "teste.txt";
     private File root = Environment.getExternalStorageDirectory();
     private File dir = new File(root.getAbsolutePath() + "/piggybank");
     private File file = new File(dir,fileName);
 
-   public FileUtils()
-   {
+//    DatabaseHelper databaseHelper = new DatabaseHelper()
 
-   }
+    /**
+     * Empty Constructor
+     */
+   public FileUtils(){}
 
    public FileUtils(String string)
    {
-
        this.fileName = string;
    }
 
@@ -111,6 +117,31 @@ public class FileUtils {
             e.printStackTrace();
         }
     }
+
+    public void writeToDatabase(ArrayList<String> listOfEditextAsStrings,Context context,TextView totalValue)
+    {
+        boolean append = false;
+        DatabaseHelper databaseHelper = new DatabaseHelper(context);
+
+            for(String s : listOfEditextAsStrings)
+            {
+                addCoinToDatabase(s,databaseHelper);
+            }
+            String total = getTotalAsString(totalValue);
+//            fos.write(total.getBytes());
+            Toast.makeText(context,"SAVED!",Toast.LENGTH_SHORT).show();
+
+    }
+
+        public void addCoinToDatabase(String coinQty, DatabaseHelper databaseHelper){
+        boolean insertData = databaseHelper.addCoin(coinQty);
+        if(insertData){
+            Log.d(TAG,"Data Sucessfully Inserted!");
+        }else{
+            Log.d(TAG,"Something went wrong...");
+        }
+    }
+
 
 
 

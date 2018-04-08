@@ -34,8 +34,6 @@ public class SectionsPageAdapter extends FragmentPagerAdapter{
     {
         mFramentList.add(fragment);
         mFragmentTitleList.add(title);
-
-
     }
 
     @Override

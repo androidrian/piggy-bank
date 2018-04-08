@@ -1,6 +1,7 @@
 package com.example.filipe.piggybank.Views;
 
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.util.SimpleArrayMap;
@@ -12,7 +13,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.filipe.piggybank.Repository.DatabaseHandler;
 import com.example.filipe.piggybank.Services.CoinOperations;
 import com.example.filipe.piggybank.R;
 import com.example.filipe.piggybank.Services.FileUtils;
@@ -25,6 +25,7 @@ import java.util.List;
 public class CoinsFragment extends Fragment implements View.OnClickListener {
 
     private static final String TAG = "CoinsFragment";
+
 
     final double VALUE_COIN_1 = 2.0;
     final double VALUE_COIN_2 = 1.0;
@@ -198,6 +199,7 @@ public class CoinsFragment extends Fragment implements View.OnClickListener {
         if(nameTypeOfButton.equalsIgnoreCase("dec"))
         {
             totalNumberOfCoinsAfter = (int) co.takeCoinFromEditText(numberOfCoinsEditText);
+
         }
         numberOfCoinsEditText.setText(String.valueOf(totalNumberOfCoinsAfter));
 
@@ -248,9 +250,7 @@ public class CoinsFragment extends Fragment implements View.OnClickListener {
             public void onClick(View v) {
                 FileUtils service = new FileUtils();
                 service.writeToSD(getListOfEditTextAsString(),v.getContext(), totalValueTextView);
-                DatabaseHandler db = new DatabaseHandler(getContext());
-                db.addRecordToDatabase(getListOfEditTextAsInteger());
-
+                service.writeToDatabase(getListOfEditTextAsString(),v.getContext(), totalValueTextView);
             }
         });
 
@@ -281,20 +281,6 @@ public class CoinsFragment extends Fragment implements View.OnClickListener {
 
         return listOfEditTextAsString;
 
-    }
-
-    public ArrayList<Integer> getListOfEditTextAsInteger()
-    {
-        ArrayList<Integer> listOfEditTextAsInteger = new ArrayList<>();
-
-        int value;
-        for(EditText e : getListWithEditTexts())
-        {
-            value = Integer.parseInt(e.getText().toString());
-            listOfEditTextAsInteger.add(value);
-        }
-
-        return listOfEditTextAsInteger;
     }
 
     private void setListOfButtons()

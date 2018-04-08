@@ -1,8 +1,14 @@
 package com.example.filipe.piggybank.Services;
 
+import android.app.Activity;
+import android.database.DataSetObservable;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+
+import com.example.filipe.piggybank.DB.DatabaseHelper;
+import com.example.filipe.piggybank.Views.MainActivity;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -14,7 +20,9 @@ import java.util.List;
 
 public class CoinOperations {
 
+    private String TAG = "CoinOperations";
     private String DEFAULT_VALUE = "0";
+//    DatabaseHelper dh = new DatabaseHelper();
 
     DecimalFormat df = new DecimalFormat("#.00");
 
@@ -95,4 +103,15 @@ public class CoinOperations {
 
         return total;
     }
+
+//    public void addCoinToDatabase(String coinQty){
+//        boolean insertData = databaseHelper.addCoin(coinQty);
+//        if(insertData){
+//            Log.d(TAG,"Data Sucessfully Inserted!");
+//        }else{
+//            Log.d(TAG,"Something went wrong...");
+//        }
+//    }
+
+
 }

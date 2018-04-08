@@ -2,6 +2,7 @@ package com.example.filipe.piggybank.Views;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,43 +30,37 @@ public class TotalFragment extends Fragment {
         FileUtils services = new FileUtils();
         String[] data = services.readDataFromFile();
 
-        //vais buscar apenas o total (ultima posicao)
-        int position = data.length-1;
-        if(data.length > 1) {
+        Log.d(TAG,"Read Data");
+
+
+
+        int position = 0;
+        if(data != null){
+            position = data.length-1;
             String totalValue = data[position];
-            String totalValueSplit[] = totalValue.split("\\.");
-            String integerPart = getIntegerPart(totalValueSplit);
-            String decimalPart = getDecimalPart(totalValueSplit);
+            String totalIntDecPart[] = totalValue.split("\\.");
+            Log.d(TAG,totalIntDecPart[0]);
+            Log.d(TAG,totalIntDecPart[1]);
+            String integerPart = getIntegerPart(totalIntDecPart[0]);
+            String decimalPart = getDecimalPart(totalIntDecPart[1]);
+            Log.d(TAG,"TOTAL VALUE: " + totalValue);
+            Log.d(TAG,"INTEGER PART: " + integerPart);
+            Log.d(TAG,"DECIMALPART: " + integerPart);
             mTotalIntegerPartTextView.setText(integerPart);
             mTotalDecimalPartTextView.setText(decimalPart);
         }
         return view;
-
     }
     //problem aqui...se o inteiro tiver + que 1 digito
     //back to this later
-    private String getIntegerPart(String[] data)
+    private String getIntegerPart(String totalValue)
     {
-        String totalIntegerPart;
-
-        totalIntegerPart = data[0];
-
-        return totalIntegerPart;
+        return totalValue;
     }
 
-    private String getDecimalPart(String[] data)
+    private String getDecimalPart(String totalValue)
     {
-
-        String totalDecimalPart;
-
-        if(data.length == 1)
-        {
-            totalDecimalPart = ".00";
-        }else {
-            totalDecimalPart = "." + data[1];
-        }
-
-        return totalDecimalPart;
+        return totalValue;
     }
 
 }

@@ -13,20 +13,28 @@
 
         <TextView
             android:id="@+id/totalIntegerPartTextView"
-            android:layout_width="149dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.34"
-            android:paddingLeft="100dp"
+            android:layout_width="48dp"
+            android:layout_height="354dp"
+            android:layout_weight="0.95"
+            android:paddingLeft="0dp"
             android:paddingTop="100dp"
             android:text="0"
             android:textAlignment="center"
             android:textSize="150sp" />
 
         <TextView
-            android:id="@+id/totalDecimalPartTextView"
+            android:id="@+id/textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text=".00"
+            android:layout_weight="0.0005"
+            android:text="."
+            android:textSize="48sp" />
+
+        <TextView
+            android:id="@+id/totalDecimalPartTextView"
+            android:layout_width="89dp"
+            android:layout_height="wrap_content"
+            android:text="00"
             android:textSize="50sp" />
 
         <TextView
