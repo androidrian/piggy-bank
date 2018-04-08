@@ -39,15 +39,24 @@ public class TotalFragment extends Fragment {
             position = data.length-1;
             String totalValue = data[position];
             String totalIntDecPart[] = totalValue.split("\\.");
-            Log.d(TAG,totalIntDecPart[0]);
-            Log.d(TAG,totalIntDecPart[1]);
-            String integerPart = getIntegerPart(totalIntDecPart[0]);
-            String decimalPart = getDecimalPart(totalIntDecPart[1]);
-            Log.d(TAG,"TOTAL VALUE: " + totalValue);
-            Log.d(TAG,"INTEGER PART: " + integerPart);
-            Log.d(TAG,"DECIMALPART: " + integerPart);
-            mTotalIntegerPartTextView.setText(integerPart);
-            mTotalDecimalPartTextView.setText(decimalPart);
+            if(totalIntDecPart.length>1) {
+                Log.d(TAG, totalIntDecPart[0]);
+                Log.d(TAG, totalIntDecPart[1]);
+                String integerPart = getIntegerPart(totalIntDecPart[0]);
+                String decimalPart = getDecimalPart(totalIntDecPart[1]);
+                Log.d(TAG, "TOTAL VALUE: " + totalValue);
+                Log.d(TAG, "INTEGER PART: " + integerPart);
+                Log.d(TAG, "DECIMALPART: " + integerPart);
+                mTotalIntegerPartTextView.setText(integerPart);
+                mTotalDecimalPartTextView.setText(decimalPart);
+            }else{
+                String integerPart = getIntegerPart(totalIntDecPart[0]);
+                Log.d(TAG, "TOTAL VALUE: " + totalValue);
+                Log.d(TAG, "INTEGER PART: " + integerPart);
+                Log.d(TAG, "DECIMALPART: " + integerPart);
+                mTotalIntegerPartTextView.setText(integerPart);
+
+            }
         }
         return view;
     }
