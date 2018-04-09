@@ -13,6 +13,8 @@ import android.widget.Toast;
 import com.example.filipe.piggybank.Controller.SectionsPageAdapter;
 import com.example.filipe.piggybank.DB.DatabaseHelper;
 import com.example.filipe.piggybank.R;
+import com.example.filipe.piggybank.Services.FileUtils;
+
 import net.danlew.android.joda.JodaTimeAndroid;
 
 public class MainActivity extends AppCompatActivity{
@@ -26,13 +28,13 @@ public class MainActivity extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        if(savedInstanceState == null)
-        {
-            getSupportFragmentManager().beginTransaction()
-                    .add(new Fragment(),TAG)
-                    .commit();
-        }
+        //dá erro se não for comentado
+//        if(savedInstanceState == null)
+//        {
+//            getSupportFragmentManager().beginTransaction()
+//                    .add(new Fragment(),TAG)
+//                    .commit();
+//        }
         //joda-time initialization
         JodaTimeAndroid.init(this);
         Log.d(TAG,"onCreate: Starting App...");

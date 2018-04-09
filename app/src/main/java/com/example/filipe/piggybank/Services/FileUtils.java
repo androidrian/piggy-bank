@@ -1,6 +1,8 @@
 package com.example.filipe.piggybank.Services;
 
 import android.content.Context;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Environment;
 import android.util.Log;
 import android.widget.EditText;
@@ -79,6 +81,16 @@ public class FileUtils {
         return data;
     }
 
+    public void readDataFromDatabase(Context context){
+    Log.d(TAG,"READING FROM DATABSE...");
+       DatabaseHelper databaseHelper = new DatabaseHelper(context);
+       Cursor data = databaseHelper.getData();
+       while(data.moveToNext()){
+           Log.d(TAG,data.getString(1));
+       }
+
+    }
+
     /**
      * Returns the value of the total as a string
      * @return the string representation of the Total var/value
@@ -118,12 +130,12 @@ public class FileUtils {
         }
     }
 
-    public void writeToDatabase(ArrayList<String> listOfEditextAsStrings,Context context,TextView totalValue)
+    public void writeToDatabase(ArrayList<String> listOfCoinValuesAsString,Context context,TextView totalValue)
     {
-        boolean append = false;
+
         DatabaseHelper databaseHelper = new DatabaseHelper(context);
 
-            for(String s : listOfEditextAsStrings)
+            for(String s : listOfCoinValuesAsString)
             {
                 addCoinToDatabase(s,databaseHelper);
             }
@@ -141,6 +153,8 @@ public class FileUtils {
             Log.d(TAG,"Something went wrong...");
         }
     }
+
+
 
 
 

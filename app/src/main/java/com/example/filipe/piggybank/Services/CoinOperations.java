@@ -104,14 +104,5 @@ public class CoinOperations {
         return total;
     }
 
-//    public void addCoinToDatabase(String coinQty){
-//        boolean insertData = databaseHelper.addCoin(coinQty);
-//        if(insertData){
-//            Log.d(TAG,"Data Sucessfully Inserted!");
-//        }else{
-//            Log.d(TAG,"Something went wrong...");
-//        }
-//    }
-
 
 }

@@ -32,5 +32,12 @@ public class Coin {
         return mCoinValue;
     }
 
+    public void setCoinName(String name){
+        mCoinName = name;
+    }
+
+    public void setCoinValue(Double value){
+        mCoinValue = value;
+    }
 }
 

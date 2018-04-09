@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.filipe.piggybank.DB.DatabaseHelper;
 import com.example.filipe.piggybank.Services.CoinOperations;
 import com.example.filipe.piggybank.R;
 import com.example.filipe.piggybank.Services.FileUtils;
@@ -232,25 +233,29 @@ public class CoinsFragment extends Fragment implements View.OnClickListener {
             @Override
             public void onClick(View v) {
                 resetValues();
+                DatabaseHelper databaseHelper = new DatabaseHelper(v.getContext());
+                databaseHelper.deleteDatabase();
             }
         });
 
         loadButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FileUtils fileService = new FileUtils();
-                fileService.loadValuesFromFile(getListWithEditTexts());
-                String[] data = fileService.readDataFromFile();
+                FileUtils serviceLoad = new FileUtils();
+                serviceLoad.loadValuesFromFile(getListWithEditTexts());
+                String[] data = serviceLoad.readDataFromFile();
                 totalValueTextView.setText(data[data.length-1]);
+                serviceLoad.readDataFromDatabase(v.getContext());
             }
         });
 
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FileUtils service = new FileUtils();
-                service.writeToSD(getListOfEditTextAsString(),v.getContext(), totalValueTextView);
-                service.writeToDatabase(getListOfEditTextAsString(),v.getContext(), totalValueTextView);
+                FileUtils serviceSave = new FileUtils();
+                serviceSave.writeToSD(getListOfEditTextAsString(),v.getContext(), totalValueTextView);
+                serviceSave.writeToDatabase(getListOfEditTextAsString(),v.getContext(), totalValueTextView);
+
             }
         });
 

@@ -2,6 +2,7 @@ package com.example.filipe.piggybank.DB;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
@@ -41,6 +42,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
+
         Log.d(TAG,"onCreate: " + getClass().toString() + " Called! \n Creating tables...");
         String createTableQuery = "CREATE TABLE "+ TABLE_NAME + "("+
                 COLUM_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
@@ -65,6 +67,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public boolean addCoin(String coinQty)
     {
+        String coinName = "dummyName";
         SQLiteDatabase db = getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(COLUM_NAME_1, coinQty);
@@ -89,6 +92,21 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public void getInformation(){
 
+    }
+
+    public Cursor getData(){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = "SELECT * FROM "  + TABLE_NAME;
+        Cursor data = db.rawQuery(query,null);
+
+        return data;
+
+    }
+
+    public void deleteDatabase(){
+        SQLiteDatabase db = getWritableDatabase();
+        db.delete(TABLE_NAME,null,null);
+        db.close();
     }
 
 }
