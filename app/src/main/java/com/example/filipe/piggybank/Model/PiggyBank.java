@@ -21,25 +21,29 @@ public class PiggyBank {
 
     private void setListOfCoins()
     {
-        coin = new Coin("DoisE",2);
+        coin = new Coin("coin_2",2);
         mListOfCoins.add(coin);
-        coin = new Coin("UmE",1);
+        coin = new Coin("coin_1",1);
         mListOfCoins.add(coin);
-        coin = new Coin("CinqC",0.50);
+        coin = new Coin("coin_050",0.50);
         mListOfCoins.add(coin);
-        coin = new Coin("VinteC",0.20);
+        coin = new Coin("coin_020",0.20);
         mListOfCoins.add(coin);
-        coin = new Coin("DezC",0.10);
+        coin = new Coin("coin_010",0.10);
         mListOfCoins.add(coin);
-        coin = new Coin("CincoC",0.05);
+        coin = new Coin("coin_005",0.05);
         mListOfCoins.add(coin);
-        coin = new Coin("DoisC",0.02);
+        coin = new Coin("coin_002",0.02);
         mListOfCoins.add(coin);
-        coin = new Coin("UmC",0.01);
+        coin = new Coin("coin_001",0.01);
         mListOfCoins.add(coin);
     }
 
-    public List<Coin> getListOfCoins()
+    /**
+     * The list of coin types
+     * @return
+     */
+    public List<Coin> getListOfTypeOfCoins()
     {
         return mListOfCoins;
     }
