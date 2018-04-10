@@ -136,11 +136,11 @@ public class FileUtils {
     {
 
         DatabaseHelper databaseHelper = new DatabaseHelper(context);
-            int i = 1;
+
             for(String coinQty : listOfCoinValuesAsString)
             {
-                addCoinToDatabase(coinQty,databaseHelper,i);
-                i++;
+                addCoinToDatabase(coinQty,databaseHelper);
+
             }
 
             for(String s : listOfCoinValuesAsString){
@@ -152,8 +152,8 @@ public class FileUtils {
 
     }
 
-        public void addCoinToDatabase(String coinQty, DatabaseHelper databaseHelper,int i){
-        boolean insertData = databaseHelper.addCoin(coinQty,i);
+        public void addCoinToDatabase(String coinQty, DatabaseHelper databaseHelper){
+        boolean insertData = databaseHelper.addCoin(coinQty);
         if(insertData){
             Log.d(TAG,"Data Sucessfully Inserted!");
         }else{

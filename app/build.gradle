@@ -28,4 +28,5 @@ dependencies {
     implementation 'net.danlew:android.joda:2.9.9'
 
     testImplementation 'junit:junit:4.12'
+    implementation 'com.idescout.sql:sqlscout-server:4.0'
 }

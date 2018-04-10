@@ -1,7 +1,6 @@
 package com.example.filipe.piggybank.Views;
 
 
-import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.util.SimpleArrayMap;
@@ -195,11 +194,11 @@ public class CoinsFragment extends Fragment implements View.OnClickListener {
         CoinOperations co = new CoinOperations();
         int totalNumberOfCoinsAfter = 0;
         if(nameTypeOfButton.equalsIgnoreCase("inc")) {
-            totalNumberOfCoinsAfter = (int) co.addCoinToEditText(numberOfCoinsEditText);
+            totalNumberOfCoinsAfter = (int) co.incrementUpdateNumberOfCoinInEditText(numberOfCoinsEditText);
         }
         if(nameTypeOfButton.equalsIgnoreCase("dec"))
         {
-            totalNumberOfCoinsAfter = (int) co.takeCoinFromEditText(numberOfCoinsEditText);
+            totalNumberOfCoinsAfter = (int) co.decrementUpdateNumberOfCoinInEditText(numberOfCoinsEditText);
 
         }
         numberOfCoinsEditText.setText(String.valueOf(totalNumberOfCoinsAfter));

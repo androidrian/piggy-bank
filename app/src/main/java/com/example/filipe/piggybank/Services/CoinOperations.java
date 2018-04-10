@@ -1,17 +1,10 @@
 package com.example.filipe.piggybank.Services;
 
-import android.app.Activity;
-import android.database.DataSetObservable;
-import android.util.Log;
-import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 
-import com.example.filipe.piggybank.DB.DatabaseHelper;
-import com.example.filipe.piggybank.Views.MainActivity;
+import com.example.filipe.piggybank.Model.Coin;
 
 import java.text.DecimalFormat;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -23,6 +16,7 @@ public class CoinOperations {
     private String TAG = "CoinOperations";
     private String DEFAULT_VALUE = "0";
 
+
     DecimalFormat df = new DecimalFormat("#.00");
 
     public CoinOperations()
@@ -31,31 +25,32 @@ public class CoinOperations {
     }
 
     //TODO refactor this method
-    public double getTotalSumOfCoins(List<EditText> list, List<Double> l_values)
-    {
-        double totalSumOfCoins = 0;
-        int size = list.size();
-        double value;
-
-        for(int i =0; i < size; i++)
-        {
-            //TODO refactor this method
-            value = getTotalSumOfCoinValue(list.get(i),i,l_values);
-            totalSumOfCoins += value;
-        }
-
-        return totalSumOfCoins;
-    }
+//    public double getTotalSumOfCoins(List<EditText> list, List<Double> l_values)
+//    {
+//        double totalSumOfCoins = 0;
+//        int size = list.size();
+//        double value;
+//
+//        for(int i =0; i < size; i++)
+//        {
+//            //TODO refactor this method
+//            Coin coin = new Coin();
+//            value = getTotalValueOfCoinOfEditText(list.get(i),i,l_values);
+//            totalSumOfCoins += value;
+//        }
+//
+//        return totalSumOfCoins;
+//    }
 
     //TODO refactor this method
     /**
      *
-     * @param editText the EditText of the 
+     * @param editText the EditText of the
      * @param index
      * @param l_coinValues
      * @return
      */
-    private double getTotalSumOfCoinValue(EditText editText, int index, List<Double> l_coinValues)
+    private double getTotalValueOfCoinOfEditText(EditText editText, int index, List<Double> l_coinValues)
     {
         double total, numberOfCoins, valueOfCoin;
         String numberOfCoinsAsString;
@@ -74,7 +69,7 @@ public class CoinOperations {
         return total;
     }
 
-    public double takeCoinFromEditText(EditText editText){
+    public double decrementUpdateNumberOfCoinInEditText(EditText editText){
         double total;
         String numberOfCoins = editText.getText().toString();
         total = Integer.valueOf(numberOfCoins);
@@ -87,7 +82,7 @@ public class CoinOperations {
         return total;
     }
 
-    public double addCoinToEditText(EditText numberOfCoinsEditText){
+    public double incrementUpdateNumberOfCoinInEditText(EditText numberOfCoinsEditText){
         double total;
         String numberOfCoinsText = numberOfCoinsEditText.getText().toString();
         System.out.println("NUMBER OF COINS TEXT:" + numberOfCoinsText);

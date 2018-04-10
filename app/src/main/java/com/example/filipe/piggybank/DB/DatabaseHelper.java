@@ -66,13 +66,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public boolean addCoin(String coinQty, int i)
+    public boolean addCoin(String coinQty)
     {
-
+        Log.d(TAG,getClass().getName() + ": addCoin()");
         SQLiteDatabase db = getWritableDatabase();
         ContentValues values = new ContentValues();
-        column += i;
-        values.put(column,coinQty);
+        values.put(COLUM_NAME_1,coinQty);
 
         Log.d(TAG,"addCoin: Adding " + coinQty + " to" + TABLE_NAME);
 
@@ -85,6 +84,21 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             return true;
         }
     }
+
+    //TODO finish this method in order to implement saving to database 1 coin at time or think about other implementation
+//    public boolean addCoinRecordToDB(Coin coin, String coinQty){
+//
+//
+//
+//        long result = db.insert(TABLE_NAME,null,values);//returns -1 if error in db.insert()
+//        db.close();
+//
+//        if(result == -1){
+//            return false;
+//        }else{
+//            return true;
+//        }
+//    }
 
     public void deleteCoin(String coinName)
     {
