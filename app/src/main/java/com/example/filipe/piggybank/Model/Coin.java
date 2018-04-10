@@ -8,6 +8,7 @@ public class Coin {
 
     private String mCoinName;
     private double mCoinValue;
+    private double mCoinWeight;
 
 
 
@@ -20,6 +21,13 @@ public class Coin {
     {
         this.mCoinName = coinName;
         this.mCoinValue = coinValue;
+    }
+
+    public Coin(String coinName, double coinValue, double coinWeight)
+    {
+        this.mCoinName = coinName;
+        this.mCoinValue = coinValue;
+        this.mCoinWeight = coinWeight;
     }
 
 

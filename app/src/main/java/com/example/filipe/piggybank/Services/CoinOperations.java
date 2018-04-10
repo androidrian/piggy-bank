@@ -22,7 +22,6 @@ public class CoinOperations {
 
     private String TAG = "CoinOperations";
     private String DEFAULT_VALUE = "0";
-//    DatabaseHelper dh = new DatabaseHelper();
 
     DecimalFormat df = new DecimalFormat("#.00");
 
@@ -31,7 +30,7 @@ public class CoinOperations {
 
     }
 
-    //refactor this method
+    //TODO refactor this method
     public double getTotalSumOfCoins(List<EditText> list, List<Double> l_values)
     {
         double totalSumOfCoins = 0;
@@ -40,7 +39,7 @@ public class CoinOperations {
 
         for(int i =0; i < size; i++)
         {
-            //refactor this method
+            //TODO refactor this method
             value = getTotalSumOfCoinValue(list.get(i),i,l_values);
             totalSumOfCoins += value;
         }
@@ -48,19 +47,27 @@ public class CoinOperations {
         return totalSumOfCoins;
     }
 
-    //refactor this method
+    //TODO refactor this method
+    /**
+     *
+     * @param editText the EditText of the 
+     * @param index
+     * @param l_coinValues
+     * @return
+     */
     private double getTotalSumOfCoinValue(EditText editText, int index, List<Double> l_coinValues)
     {
         double total, numberOfCoins, valueOfCoin;
-        String numberOfCoinsText;
+        String numberOfCoinsAsString;
 
-        numberOfCoinsText = editText.getText().toString();
-        if(!numberOfCoinsText.equalsIgnoreCase(""))
+        numberOfCoinsAsString = editText.getText().toString();
+        if(!numberOfCoinsAsString.equalsIgnoreCase(""))
         {
-            numberOfCoins = Integer.valueOf(numberOfCoinsText);
+            numberOfCoins = Integer.valueOf(numberOfCoinsAsString);
             valueOfCoin = l_coinValues.get(index);
             total = numberOfCoins * valueOfCoin;
         }else{
+            //TODO tentar replicar cenário para verificar se o erro ainda se mantém (CoinOperations)
             total = 0; //pq supostamente nao tem valor nenhum lá
             editText.setText(DEFAULT_VALUE);//isto nao devia estar aqui mas para ja fica
         }
@@ -69,10 +76,7 @@ public class CoinOperations {
 
     public double takeCoinFromEditText(EditText editText){
         double total;
-        String numberOfCoins;
-
-        numberOfCoins = editText.getText().toString();
-
+        String numberOfCoins = editText.getText().toString();
         total = Integer.valueOf(numberOfCoins);
         total--;
 
@@ -88,8 +92,7 @@ public class CoinOperations {
         String numberOfCoinsText = numberOfCoinsEditText.getText().toString();
         System.out.println("NUMBER OF COINS TEXT:" + numberOfCoinsText);
 
-        //se nao tiver nada para nao dar null tem que ficar a zero
-        //ou entao fazer catch do NullPointerException
+        //TODO verificar aqui (CoinOperations) esta situação : se nao tiver nada para nao dar null tem que ficar a zero ou entao fazer catch do NullPointerException
         if(numberOfCoinsText.equalsIgnoreCase(""))
         {
             numberOfCoinsEditText.setText(DEFAULT_VALUE);//total = 0

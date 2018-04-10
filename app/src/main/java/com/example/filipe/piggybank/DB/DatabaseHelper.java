@@ -22,7 +22,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final int DATABASE_VERSION = 1;
     private static final String DATABASE_NAME = "piggyBank.db";
     public static final String TABLE_NAME = "coins";
-    public static final String COLUM_ID = "id";
+    public static final  String COLUM_ID = "id";
     public static final String COLUM_NAME_1 = "coin_2";
     public static final String COLUM_NAME_2 = "coin_1";
     public static final String COLUM_NAME_3 = "coin_050";
@@ -31,6 +31,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String COLUM_NAME_6 = "coin_005";
     public static final String COLUM_NAME_7 = "coin_002";
     public static final String COLUM_NAME_8 = "coin_001";
+    public String column = "COLUM_NAME_";
 
     public DatabaseHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
         super(context, name, factory, version);
@@ -65,16 +66,17 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public boolean addCoin(String coinQty)
+    public boolean addCoin(String coinQty, int i)
     {
-        String coinName = "dummyName";
+
         SQLiteDatabase db = getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put(COLUM_NAME_1, coinQty);
+        column += i;
+        values.put(column,coinQty);
 
         Log.d(TAG,"addCoin: Adding " + coinQty + " to" + TABLE_NAME);
 
-        long result = db.insert(TABLE_NAME,null,values);
+        long result = db.insert(TABLE_NAME,null,values);//returns -1 if error in db.insert()
         db.close();
 
         if(result == -1){

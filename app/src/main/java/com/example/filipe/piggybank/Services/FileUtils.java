@@ -32,6 +32,7 @@ public class FileUtils {
     private File root = Environment.getExternalStorageDirectory();
     private File dir = new File(root.getAbsolutePath() + "/piggybank");
     private File file = new File(dir,fileName);
+    private DatabaseHelper databaseHelper;
 
 //    DatabaseHelper databaseHelper = new DatabaseHelper()
 
@@ -39,6 +40,7 @@ public class FileUtils {
      * Empty Constructor
      */
    public FileUtils(){}
+
 
    public FileUtils(String string)
    {
@@ -134,30 +136,30 @@ public class FileUtils {
     {
 
         DatabaseHelper databaseHelper = new DatabaseHelper(context);
-
-            for(String s : listOfCoinValuesAsString)
+            int i = 1;
+            for(String coinQty : listOfCoinValuesAsString)
             {
-                addCoinToDatabase(s,databaseHelper);
+                addCoinToDatabase(coinQty,databaseHelper,i);
+                i++;
             }
-            String total = getTotalAsString(totalValue);
+
+            for(String s : listOfCoinValuesAsString){
+
+            }
+//            String total = getTotalAsString(totalValue);
 //            fos.write(total.getBytes());
             Toast.makeText(context,"SAVED!",Toast.LENGTH_SHORT).show();
 
     }
 
-        public void addCoinToDatabase(String coinQty, DatabaseHelper databaseHelper){
-        boolean insertData = databaseHelper.addCoin(coinQty);
+        public void addCoinToDatabase(String coinQty, DatabaseHelper databaseHelper,int i){
+        boolean insertData = databaseHelper.addCoin(coinQty,i);
         if(insertData){
             Log.d(TAG,"Data Sucessfully Inserted!");
         }else{
-            Log.d(TAG,"Something went wrong...");
+            Log.d(TAG,"Something went wrong saving to Database...");
         }
     }
-
-
-
-
-
 
     private File createFile(Context context)
     {
