@@ -18,7 +18,7 @@ import com.example.filipe.piggybank.Model.Coin;
  */
 public class DatabaseHelper extends SQLiteOpenHelper {
 
-    private String TAG = "DatabaseHelper";
+    public final String TAG = getClass().getName();
     private static final int DATABASE_VERSION = 1;
     private static final String DATABASE_NAME = "piggyBank.db";
     public static final String TABLE_NAME = "coins";
@@ -31,13 +31,18 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String COLUM_NAME_6 = "coin_005";
     public static final String COLUM_NAME_7 = "coin_002";
     public static final String COLUM_NAME_8 = "coin_001";
-    public String column = "COLUM_NAME_";
+    
 
     public DatabaseHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
         super(context, name, factory, version);
     }
 
+    /**
+     * Constructor
+     * @param context the View/Application context
+     */
     public DatabaseHelper(Context context){
+
         super(context,TABLE_NAME,null,1);
     }
 
@@ -110,6 +115,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     }
 
+    /**
+     * Gets a Cursor from reading the Database
+     * @return teh Cursor with all the records in the Database
+     */
     public Cursor getData(){
         SQLiteDatabase db = this.getWritableDatabase();
         String query = "SELECT * FROM "  + TABLE_NAME;
@@ -119,10 +128,23 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     }
 
+    /**
+     * Deletes all columns in Database
+     */
     public void deleteDatabase(){
         SQLiteDatabase db = getWritableDatabase();
         db.delete(TABLE_NAME,null,null);
         db.close();
+    }
+
+    public void readDataFromDatabase(Context context){
+        Log.d(TAG,"READING FROM DATABSE...");
+        DatabaseHelper databaseHelper = new DatabaseHelper(context);
+        Cursor data = databaseHelper.getData();
+        while(data.moveToNext()){
+            Log.d(TAG,data.getString(1));
+        }
+
     }
 
 }

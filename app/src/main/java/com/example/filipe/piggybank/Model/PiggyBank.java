@@ -10,6 +10,7 @@ import java.util.List;
 
 public class PiggyBank {
 
+    public final String TAG = getClass().getName();
     private Coin coin;
     private List<Coin> mListOfCoins;
 

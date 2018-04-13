@@ -27,7 +27,7 @@ import java.util.Scanner;
 
 public class FileUtils {
 
-    private String TAG = "FileUtils";
+    public final String TAG = getClass().getName();
     private String fileName = "teste.txt";
     private File root = Environment.getExternalStorageDirectory();
     private File dir = new File(root.getAbsolutePath() + "/piggybank");
@@ -105,6 +105,12 @@ public class FileUtils {
     }
 
 
+    /**
+     * Writes the number of each coin into a file
+     * @param listOfEditextAsStrings
+     * @param context
+     * @param totalValue
+     */
     public void writeToSD(ArrayList<String> listOfEditextAsStrings, Context context,TextView totalValue)
     {
         boolean append = false;
@@ -152,7 +158,7 @@ public class FileUtils {
 
     }
 
-        public void addCoinToDatabase(String coinQty, DatabaseHelper databaseHelper){
+    public void addCoinToDatabase(String coinQty, DatabaseHelper databaseHelper){
         boolean insertData = databaseHelper.addCoin(coinQty);
         if(insertData){
             Log.d(TAG,"Data Sucessfully Inserted!");
@@ -187,15 +193,21 @@ public class FileUtils {
         return file;
     }
 
-    public List<Integer> getFromFileListWithNumberOfCoinsInBank()
+    /**
+     * Reads the file where the total number of coins are stored in a single line
+     * @return a list with the total number of coins of each coin
+     * having the total value as the last number
+     * ex:  1;2;3;4;5;6;7;8;total
+     */
+    public List<Integer> readFromFileTotalNumberOfEachCoin()
     {
         String[] data = readDataFromFile();
         List<Integer> listNumberOfCoins = new ArrayList<>();
-       for(int i = 0; i < data.length-1; i++) {
+
+        for(int i = 0; i < data.length-1; i++) {
            int value = Integer.parseInt(data[i]);
            listNumberOfCoins.add(value);
-       }
-
+        }
         return listNumberOfCoins;
     }
 

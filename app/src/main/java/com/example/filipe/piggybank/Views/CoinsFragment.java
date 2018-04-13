@@ -24,8 +24,7 @@ import java.util.List;
 
 public class CoinsFragment extends Fragment implements View.OnClickListener {
 
-    private static final String TAG = "CoinsFragment";
-
+    public final String TAG = getClass().getName();
 
     final double VALUE_COIN_1 = 2.0;
     final double VALUE_COIN_2 = 1.0;
@@ -245,6 +244,7 @@ public class CoinsFragment extends Fragment implements View.OnClickListener {
                 String[] data = serviceLoad.readDataFromFile();
                 totalValueTextView.setText(data[data.length-1]);
                 serviceLoad.readDataFromDatabase(v.getContext());
+
             }
         });
 

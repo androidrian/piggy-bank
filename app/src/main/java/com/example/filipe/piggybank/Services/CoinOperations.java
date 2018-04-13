@@ -1,9 +1,11 @@
+/**
+ * TODO considerar remover moedas (-1)
+ * TODO a gravação está a ser feita com inúmeras conversões de EditText para String e dps para Integer, substituir por objectos e JPA na gravação para a BD
+ */
+
 package com.example.filipe.piggybank.Services;
 
 import android.widget.EditText;
-
-import com.example.filipe.piggybank.Model.Coin;
-
 import java.text.DecimalFormat;
 import java.util.List;
 
@@ -13,12 +15,15 @@ import java.util.List;
 
 public class CoinOperations {
 
-    private String TAG = "CoinOperations";
+    public final String TAG = getClass().getName();
     private String DEFAULT_VALUE = "0";
 
 
     DecimalFormat df = new DecimalFormat("#.00");
 
+    /**
+     * Default Constructor
+     */
     public CoinOperations()
     {
 

@@ -12,6 +12,7 @@ import java.util.List;
 
 public class StatsOperations {
 
+    public final String TAG = getClass().getName();
     DecimalFormat df = new DecimalFormat("#.00");
 
 

@@ -3,23 +3,20 @@ package com.example.filipe.piggybank.Views;
 import android.annotation.TargetApi;
 import android.os.Build;
 import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.Toast;
-
 import com.example.filipe.piggybank.Controller.SectionsPageAdapter;
 import com.example.filipe.piggybank.DB.DatabaseHelper;
 import com.example.filipe.piggybank.R;
-import com.example.filipe.piggybank.Services.FileUtils;
 
 import net.danlew.android.joda.JodaTimeAndroid;
 
 public class MainActivity extends AppCompatActivity{
 
-    private static final String TAG = "MainActivity";
+    public final String TAG = getClass().getName();
     private SectionsPageAdapter mSectionsPagerAdapter;
     private ViewPager viewPager;
     private DatabaseHelper databaseHelper;
@@ -28,7 +25,7 @@ public class MainActivity extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        //dá erro se não for comentado
+        //dá erro se não for comentado, não sei pq, foi dps da actualização do editor
 //        if(savedInstanceState == null)
 //        {
 //            getSupportFragmentManager().beginTransaction()

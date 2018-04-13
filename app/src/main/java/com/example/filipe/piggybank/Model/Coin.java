@@ -6,6 +6,7 @@ package com.example.filipe.piggybank.Model;
 
 public class Coin {
 
+    public final String TAG = getClass().getName();
     private String mCoinName;
     private double mCoinValue;
     private double mCoinWeight;

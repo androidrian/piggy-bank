@@ -16,7 +16,7 @@ import java.util.List;
 
 public class StatsFragment extends Fragment {
 
-    private static final String TAG = "StatsFragment";
+    public final String TAG = getClass().getName();
 
     private TextView coin1,coin2,coin3,coin4,coin5,coin6,coin7,coin8;
     private TextView coinPerc1,coinPerc2,coinPerc3,coinPerc4,coinPerc5,coinPerc6,coinPerc7,coinPerc8;
@@ -35,7 +35,7 @@ public class StatsFragment extends Fragment {
         initComponents(view);
         FileUtils services = new FileUtils();
 
-        List<Integer> listNumberOfCoins = services.getFromFileListWithNumberOfCoinsInBank();
+        List<Integer> listNumberOfCoins = services.readFromFileTotalNumberOfEachCoin();
         setCoinPercentageValuesOnTextViews(listNumberOfCoins);
 
         return view;
