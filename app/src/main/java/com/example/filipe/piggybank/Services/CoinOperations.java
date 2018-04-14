@@ -18,7 +18,6 @@ public class CoinOperations {
     public final String TAG = getClass().getName();
     private String DEFAULT_VALUE = "0";
 
-
     DecimalFormat df = new DecimalFormat("#.00");
 
     /**
@@ -79,6 +78,8 @@ public class CoinOperations {
         String numberOfCoins = editText.getText().toString();
         total = Integer.valueOf(numberOfCoins);
         total--;
+
+//        Preferences > Keymap > Editor Actions > Decrease Font Size/Increase Font Size/Reset Font Size and bind some keys to those commands.
 
         if(total < 0 )
         {

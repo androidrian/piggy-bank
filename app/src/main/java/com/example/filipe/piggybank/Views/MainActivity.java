@@ -10,21 +10,25 @@ import android.util.Log;
 import android.widget.Toast;
 import com.example.filipe.piggybank.Controller.SectionsPageAdapter;
 import com.example.filipe.piggybank.DB.DatabaseHelper;
+import com.example.filipe.piggybank.Model.PiggyBank;
 import com.example.filipe.piggybank.R;
 
 import net.danlew.android.joda.JodaTimeAndroid;
 
 public class MainActivity extends AppCompatActivity{
-
     public final String TAG = getClass().getName();
+
     private SectionsPageAdapter mSectionsPagerAdapter;
     private ViewPager viewPager;
     private DatabaseHelper databaseHelper;
+    private PiggyBank piggyBank;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        this.piggyBank = new PiggyBank();
+
         //dá erro se não for comentado, não sei pq, foi dps da actualização do editor
 //        if(savedInstanceState == null)
 //        {

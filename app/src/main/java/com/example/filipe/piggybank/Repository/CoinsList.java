@@ -7,7 +7,6 @@ import java.util.List;
 
 public class CoinsList {
 
-    public final String TAG = getClass().getName();
     private Coin coin;
     private ArrayList<Coin> listOfCoins;
 

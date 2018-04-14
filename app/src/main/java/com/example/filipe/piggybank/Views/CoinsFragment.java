@@ -13,6 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.filipe.piggybank.DB.DatabaseHelper;
+import com.example.filipe.piggybank.Model.Coin;
 import com.example.filipe.piggybank.Services.CoinOperations;
 import com.example.filipe.piggybank.R;
 import com.example.filipe.piggybank.Services.FileUtils;
@@ -46,8 +47,14 @@ public class CoinsFragment extends Fragment implements View.OnClickListener {
     private List<Button> m_listOfButtons = new ArrayList<>();
     private SimpleArrayMap<EditText,Integer> m_mapOfEditTextIndex = new SimpleArrayMap<>();
     private SimpleArrayMap<Button,EditText> m_mapOfButtonToEditText;
+    private final List<Coin> m_listOfCoins = new ArrayList<>();
+
 
     DecimalFormat df = new DecimalFormat("#.00");
+
+    public CoinsFragment(){
+
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -120,6 +127,9 @@ public class CoinsFragment extends Fragment implements View.OnClickListener {
 
     private void initWidgetComponents(View view)
     {
+
+
+
         //initialize EditTexts
         numberCoins1 = (EditText) view.findViewById(R.id.coinText1);
         numberCoins2 = (EditText) view.findViewById(R.id.coinText2);
