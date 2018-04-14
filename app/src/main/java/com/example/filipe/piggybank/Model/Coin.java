@@ -12,18 +12,31 @@ public class Coin {
     private double mCoinWeight;
 
 
-
+    /**
+     * Default constructor
+     */
     public Coin()
     {
 
     }
 
+    /**
+     * Coin constructor
+     * @param coinName
+     * @param coinValue
+     */
     public Coin(String coinName, double coinValue)
     {
         this.mCoinName = coinName;
         this.mCoinValue = coinValue;
     }
 
+    /**
+     * Coin constructor
+     * @param coinName
+     * @param coinValue
+     * @param coinWeight
+     */
     public Coin(String coinName, double coinValue, double coinWeight)
     {
         this.mCoinName = coinName;
@@ -41,6 +54,10 @@ public class Coin {
         return mCoinValue;
     }
 
+    public double getCoinWeight(){
+        return mCoinWeight;
+    }
+
     public void setCoinName(String name){
         mCoinName = name;
     }
@@ -48,5 +65,11 @@ public class Coin {
     public void setCoinValue(Double value){
         mCoinValue = value;
     }
+
+    public void setCoinWeight(Double weight){
+        mCoinWeight = weight;
+    }
+
+
 }
 

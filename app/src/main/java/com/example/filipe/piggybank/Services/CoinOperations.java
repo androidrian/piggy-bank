@@ -6,6 +6,9 @@
 package com.example.filipe.piggybank.Services;
 
 import android.widget.EditText;
+
+import com.example.filipe.piggybank.Model.PiggyBank;
+
 import java.text.DecimalFormat;
 import java.util.List;
 
@@ -16,7 +19,8 @@ import java.util.List;
 public class CoinOperations {
 
     public final String TAG = getClass().getName();
-    private String DEFAULT_VALUE = "0";
+    private final String DEFAULT_VALUE = "0";
+    PiggyBank piggyBank;
 
     DecimalFormat df = new DecimalFormat("#.00");
 
@@ -28,6 +32,9 @@ public class CoinOperations {
 
     }
 
+    public void calculateTotalOfWeightInPiggyBank(){
+
+    }
     //TODO refactor this method
 //    public double getTotalSumOfCoins(List<EditText> list, List<Double> l_values)
 //    {
@@ -107,6 +114,8 @@ public class CoinOperations {
 
         return total;
     }
+
+
 
 
 }

@@ -21,13 +21,13 @@ public class MainActivity extends AppCompatActivity{
     private SectionsPageAdapter mSectionsPagerAdapter;
     private ViewPager viewPager;
     private DatabaseHelper databaseHelper;
-    private PiggyBank piggyBank;
+    PiggyBank piggyBank = new PiggyBank();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        this.piggyBank = new PiggyBank();
+        piggyBank.initPiggyBank();
 
         //dá erro se não for comentado, não sei pq, foi dps da actualização do editor
 //        if(savedInstanceState == null)
@@ -49,7 +49,6 @@ public class MainActivity extends AppCompatActivity{
         if (shouldAskPermissions()) {
             askPermissions();
         }
-
         databaseHelper = new DatabaseHelper(this);
     }
 
