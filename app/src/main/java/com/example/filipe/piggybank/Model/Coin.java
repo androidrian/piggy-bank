@@ -10,6 +10,7 @@ public class Coin {
     private String mCoinName;
     private double mCoinValue;
     private double mCoinWeight;
+    private int mquantity;
 
 
     /**
@@ -44,6 +45,14 @@ public class Coin {
         this.mCoinWeight = coinWeight;
     }
 
+    public Coin(String coinName, double coinValue, double coinWeight, int quantity)
+    {
+        this.mCoinName = coinName;
+        this.mCoinValue = coinValue;
+        this.mCoinWeight = coinWeight;
+        this.mquantity = quantity;
+    }
+
 
 
     public String getCoinName() {
@@ -68,6 +77,14 @@ public class Coin {
 
     public void setCoinWeight(Double weight){
         mCoinWeight = weight;
+    }
+
+    public void setCoinQuantity(int quantity){
+        mquantity = quantity;
+    }
+
+    public int returnCoinQuantity(){
+        return this.mquantity;
     }
 
 

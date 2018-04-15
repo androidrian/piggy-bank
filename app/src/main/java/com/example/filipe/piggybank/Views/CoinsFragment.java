@@ -190,7 +190,8 @@ public class CoinsFragment extends Fragment implements View.OnClickListener {
   
         //guarda o valor das moedas antes de o alterar
         int totalNumberOfCoinsBefore;
-        if(numberOfCoinsString.equalsIgnoreCase(" "))
+        //usar regex aqui
+        if(numberOfCoinsString.equalsIgnoreCase(" ") || numberOfCoinsString.equalsIgnoreCase("") )
         {
             totalNumberOfCoinsBefore = 0;
         }
@@ -215,6 +216,10 @@ public class CoinsFragment extends Fragment implements View.OnClickListener {
         //parte final do update
         int diff =
                 totalNumberOfCoinsAfter - totalNumberOfCoinsBefore;
+        //validação para a diferença
+        if(diff < 0){
+            diff = 0;
+        }
 
         int correspondingValueIndex = getMapOfEditTextIndex().get(numberOfCoinsEditText);
         double diffOfValue = diff * m_listOfCoinValues.get(correspondingValueIndex);

@@ -101,9 +101,11 @@ public class CoinOperations {
         System.out.println("NUMBER OF COINS TEXT:" + numberOfCoinsText);
 
         //TODO verificar aqui (CoinOperations) esta situação : se nao tiver nada para nao dar null tem que ficar a zero ou entao fazer catch do NullPointerException
-        if(numberOfCoinsText.equalsIgnoreCase(""))
+        // <java.lang.NumberFormatException: For input string: ""> sem a validação em baixo
+        if(numberOfCoinsText.equalsIgnoreCase("") || numberOfCoinsText.equalsIgnoreCase(" ") || numberOfCoinsText.length()<1)
         {
             numberOfCoinsEditText.setText(DEFAULT_VALUE);//total = 0
+            numberOfCoinsText = numberOfCoinsEditText.getText().toString();
             total = Integer.valueOf(numberOfCoinsText);
         }
         else
